@@ -1,0 +1,46 @@
+sequenceDiagram
+    actor Admin
+    actor User
+    participant Server
+    participant Database
+
+    Note over Admin,Database: Setup, run once by the admin
+    Admin->>Server: npm run db:init
+    Server->>Database: create tables: course, subject,<br/>course_subject, plan, plan_item
+    Database-->>Server: ok
+    Server-->>Admin: "SQLite schema ready"
+    Admin->>Server: npm run db:import
+    Server->>Server: read and parse data/courses.csv
+    alt no courses in the database yet
+        Server->>Database: one transaction: INSERT courses, subjects, links
+        Database-->>Server: ok
+        Server-->>Admin: "Imported 474 courses"
+    else already imported
+        Server-->>Admin: "Course data already exists. Nothing changed."
+    end
+
+    Note over Admin,Database: Student plans a degree
+    User->>Server: GET /
+    Server-->>User: index.html, main.js, main.css
+    Note over User: page shows "Loading courses…"
+    User->>Server: GET /data/courses.csv
+    Server-->>User: course catalogue (CSV)
+    Note over User: catalogue and empty plan table appear
+    loop while planning
+        User->>User: choose major / minor (label only)
+        User->>User: search by code or title, filter by subject
+        User->>User: view course details
+        User->>User: pick a trimester, add a course
+        User->>User: remove a course
+        Note over User: duplicates are blocked,<br/>credit totals recalculated
+    end
+    Note over User,Database: The plan stays in browser memory.<br/>No save request is sent, and reloading clears it.
+
+    Note over Admin,Database: Health check
+    Admin->>Server: GET /api/health
+    Server->>Database: SELECT 1
+    Database-->>Server: ok
+    Server-->>Admin: {"status":"ok","database":"sqlite","stage":"setup"}
+
+    Note over Admin,Database: Future, not implemented
+    Note over User,Database: GET /api/courses<br/>GET / POST /api/plans<br/>GET / PUT / DELETE /api/plans/:id
