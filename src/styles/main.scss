@@ -2,6 +2,10 @@
 
 // ---------------------------------------------------------------- page
 
+* {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
   font-family: $font-family;
@@ -25,6 +29,12 @@ h3 {
 
 a {
   color: $color-accent;
+  text-underline-offset: 0.2em;
+}
+
+:focus-visible {
+  outline: 2px solid $color-accent;
+  outline-offset: 3px;
 }
 
 // ---------------------------------------------------------------- header bar
@@ -46,13 +56,28 @@ a {
     text-decoration: none;
   }
 
-  nav a {
-    margin-right: 0.75rem;
-    color: $color-text;
+  nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem;
 
-    &[aria-current='page'] {
-      font-weight: 700;
+    a {
+      padding: 0.35rem 0.65rem;
+      border: 1px solid transparent;
+      border-radius: $radius;
+      color: $color-text;
       text-decoration: none;
+
+      &:hover {
+        background: $color-hover;
+      }
+
+      &[aria-current='page'] {
+        font-weight: 700;
+        background: $color-bg-light;
+        border-color: $color-border-card;
+        box-shadow: $shadow-inset, $shadow-card;
+      }
     }
   }
 }
@@ -85,13 +110,15 @@ section,
 .card {
   padding: $spacing;
   margin-bottom: $spacing;
-  background: $color-bg-light;
+  background: linear-gradient(to bottom, $color-bg-card-start, $color-bg-card-end);
   border: 1px solid $color-border-card;
   border-radius: $radius;
-  box-shadow: $shadow-card;
+  box-shadow: $shadow-inset, $shadow-card;
 
   > h2:first-child {
     margin-top: 0;
+    padding-bottom: 0.65rem;
+    border-bottom: 1px solid $color-border-card;
   }
 }
 
@@ -109,14 +136,28 @@ button {
   border: 1px solid $color-border-card;
   border-radius: $radius;
   padding: 0.25rem 0.5rem;
+  max-width: 100%;
+  min-height: 2.25rem;
 }
 
 button {
   margin: 0.2rem;
   cursor: pointer;
+  background-image: $gloss-face;
+  box-shadow: $shadow-inset, $shadow-card;
 
-  &:hover {
-    background: $color-hover;
+  &:hover:not(:disabled) {
+    background-color: $color-bg-warm;
+    border-color: $color-border;
+  }
+
+  &:active:not(:disabled) {
+    box-shadow: $shadow-well;
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: default;
   }
 }
 
@@ -149,6 +190,22 @@ li {
 #catalogue {
   max-height: 300px;
   overflow: auto;
+  list-style: none;
+  padding: 0.3rem;
+
+  li {
+    padding: 0.6rem 0.75rem;
+    margin-bottom: 0.5rem;
+    background: linear-gradient(to bottom, $color-bg-card-start, $color-bg-card-end);
+    border: 1px solid $color-border-card;
+    border-radius: $radius;
+    box-shadow: $shadow-inset, $shadow-card;
+
+    &:hover,
+    &:focus-within {
+      border-color: $color-border;
+    }
+  }
 }
 
 #count,
@@ -159,6 +216,25 @@ li {
 
 .table-scroll {
   overflow-x: auto;
+}
+
+.plan-section {
+  background: $color-bg-board;
+  border-color: $color-border-board;
+
+  table {
+    min-width: 36rem;
+    background: $color-bg-light;
+  }
+
+  th {
+    background: linear-gradient(to bottom, $color-bg-board-start, $color-bg-board-end);
+  }
+
+  th,
+  td {
+    border-color: $color-border-board;
+  }
 }
 
 // ---------------------------------------------------------------- about page
@@ -186,11 +262,45 @@ li {
     }
   }
 
+  .table-scroll table {
+    min-width: 36rem;
+  }
+
+  .page-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1rem;
+    margin: 1rem 0;
+    padding: 0.75rem 0;
+    border-block: 1px solid $color-border-card;
+  }
+
+  .project-question {
+    padding: 0.75rem 1rem;
+    background: $color-bg-warm;
+    border-left: 3px solid $color-accent;
+    font-weight: 700;
+  }
+
   .documents li {
     margin-bottom: 0.6rem;
   }
 
   .documents .muted {
     color: $color-text-muted;
+  }
+}
+
+@media (max-width: 40rem) {
+  #workspace label {
+    display: grid;
+    gap: 0.25rem;
+    margin: 0.75rem 0;
+  }
+
+  #workspace input,
+  #workspace select {
+    width: 100%;
+    min-width: 0;
   }
 }

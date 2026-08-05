@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Sequence diagram — Tracey</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu+Sans:wght@400;700&amp;display=swap" />
+    <link rel="stylesheet" href="/assets/styles/main.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="/">Tracey</a>
+      <nav aria-label="Site">
+        <a href="/">Planner</a>
+        <a href="/abstract">Abstract</a>
+        <a href="/components">Components</a>
+        <a href="/sequence" aria-current="page">Sequence</a>
+        <a href="/about">About the project</a>
+      </nav>
+    </header>
+    <main class="about">
+      <h1>Sequence diagram</h1>
+      <p>How the current prototype loads its catalogue, updates a plan and checks the database.</p>
+      <p><a href="/docs/sequence-diagram.svg">Open the full-size diagram (SVG)</a></p>
+      <section aria-labelledby="sequence-title">
+        <h2 id="sequence-title">From setup to planning</h2>
+        <p>
+          Four participants: the <strong>Admin</strong> who sets the database up, the
+          <strong>User</strong> planning in the browser, the <strong>Server</strong> and the
+          <strong>Database</strong>. Solid arrows are requests, dashed arrows are replies.
+        </p>
+        <figure>
+          <img src="/docs/sequence-diagram.svg" alt="Sequence diagram: the admin initialises and imports the database; the user loads the page and the course CSV, then searches, filters, adds and removes courses in the browser without further requests; the health check queries SQLite; plan routes are marked as future work." width="1065" height="1989" />
+          <figcaption>
+            Setup runs once from the command line. Planning needs the server only for the page and
+            the course CSV; every edit after that stays in the browser. The plan routes at the bottom
+            are documented but not implemented.
+          </figcaption>
+        </figure>
+      </section>
+      <section aria-labelledby="sequence-notes">
+        <h2 id="sequence-notes">Reading the diagram</h2>
+        <ul>
+          <li><strong>Setup:</strong> the administrator runs the database scripts from the command line.
+            This is separate from handling browser requests.</li>
+          <li><strong>Planning:</strong> the browser downloads the page, its assets and the course CSV.
+            Search, details, add/remove and credit totals then run locally.</li>
+          <li><strong>Health check:</strong> a separate request to <code>/api/health</code> runs
+            <code>SELECT 1</code> against SQLite. The planner does not request it automatically.</li>
+          <li><strong>Persistence:</strong> the active plan stays in memory and resets on reload.
+            The plan API routes shown at the bottom are proposed future work.</li>
+        </ul>
+      </section>
+    </main>
+  </body>
+</html>

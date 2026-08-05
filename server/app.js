@@ -16,7 +16,7 @@ const mime = {
   '.png': 'image/png',
 };
 
-// Serve the frontend, the About page and one API health check. Plan/course endpoints come later.
+// Serve the planner, project documentation and one API health check. Plan/course endpoints come later.
 export function createApp(db) {
   return createServer(async (request, response) => {
     if (!['GET', 'HEAD'].includes(request.method)) {
@@ -38,6 +38,9 @@ export function createApp(db) {
       let file;
       if (path === '/') file = resolve(root, 'index.html');
       if (path === '/about') file = resolve(root, 'about.html');
+      if (path === '/abstract' || path === '/asbtract') file = resolve(root, 'abstract.html');
+      if (path === '/components') file = resolve(root, 'components.html');
+      if (path === '/sequence') file = resolve(root, 'sequence.html');
       if (path === '/data/courses.csv') file = resolve(root, 'data/courses.csv');
       if (path.startsWith('/assets/')) {
         const candidate = resolve(assets, path.slice('/assets/'.length));

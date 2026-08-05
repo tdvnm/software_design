@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Components and technology stack — Tracey</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu+Sans:wght@400;700&amp;display=swap" />
+    <link rel="stylesheet" href="/assets/styles/main.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="/">Tracey</a>
+      <nav aria-label="Site">
+        <a href="/">Planner</a>
+        <a href="/abstract">Abstract</a>
+        <a href="/components" aria-current="page">Components</a>
+        <a href="/sequence">Sequence</a>
+        <a href="/about">About the project</a>
+      </nav>
+    </header>
+    <main class="about">
+      <h1>Components and technology stack</h1>
+      <p>The technologies and components used in this prototype, and how they relate to Homework 2.</p>
+      <section aria-labelledby="stack-title">
+        <h2 id="stack-title">Technology stack</h2>
+        <div class="table-scroll" role="region" aria-labelledby="stack-title" tabindex="0">
+          <table>
+            <thead><tr><th scope="col">Technology</th><th scope="col">What we use it for</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">HTML</th><td>Page structure, labelled forms and the trimester table.</td></tr>
+              <tr><th scope="row">TypeScript</th><td>Course and plan types, browser events and data operations. Compiled to native JavaScript modules.</td></tr>
+              <tr><th scope="row">Sass / CSS</th><td>Shared colour and spacing variables, cards, controls and responsive layouts.</td></tr>
+              <tr><th scope="row">Node.js HTTP</th><td>The built-in <code>node:http</code> module serves pages, assets and the health endpoint.</td></tr>
+              <tr><th scope="row">SQLite</th><td>The built-in <code>node:sqlite</code> module creates tables and imports the course CSV. The browser is not connected to it yet.</td></tr>
+              <tr><th scope="row">Node.js test runner</th><td><code>node:test</code> checks CSV parsing, plan operations and server routes.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>TypeScript and Sass are the only npm build dependencies. The prototype has no frontend
+          framework, backend framework or ORM.</p>
+      </section>
+      <section aria-labelledby="frontend-title">
+        <h2 id="frontend-title">Frontend components</h2>
+        <div class="table-scroll" role="region" aria-labelledby="frontend-title" tabindex="0">
+          <table>
+            <thead><tr><th scope="col">Module</th><th scope="col">Responsibility</th></tr></thead>
+            <tbody>
+              <tr><th scope="row"><code>components/programme.ts</code></th><td>Major/minor selectors and the plan label.</td></tr>
+              <tr><th scope="row"><code>components/catalogue.ts</code></th><td>Course search, subject filters, Details and Add buttons.</td></tr>
+              <tr><th scope="row"><code>components/board.ts</code></th><td>The four-year trimester table, placements, removal and credit totals.</td></tr>
+              <tr><th scope="row"><code>components/details.ts</code></th><td>The selected course's title, subjects, credits and description.</td></tr>
+              <tr><th scope="row"><code>main.ts</code></th><td>Startup, loading/error messages and callbacks that connect the components.</td></tr>
+              <tr><th scope="row"><code>plan.ts</code></th><td>In-memory plan operations, duplicate prevention and credit sums, independent of the DOM.</td></tr>
+              <tr><th scope="row"><code>data/catalogue.ts</code> and <code>lib/csv.ts</code></th><td>Download the course snapshot and parse CSV fields.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>When a student presses Add, the catalogue calls a callback in <code>main.ts</code>.
+          That calls <code>addCourse</code> in <code>plan.ts</code>, then redraws the board and totals.
+          No server request is made for that edit.</p>
+      </section>
+      <section aria-labelledby="components-title">
+        <h2 id="components-title">HW2: the full system design</h2>
+        <p>
+          Assignment 2 laid out the full system as eight components. This is how much of each the
+          prototype contains.
+        </p>
+        <div class="table-scroll">
+          <table>
+            <thead>
+              <tr>
+                <th scope="col">Component</th>
+                <th scope="col">Responsibility</th>
+                <th scope="col">Runs</th>
+                <th scope="col">In this prototype</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">Client</th>
+                <td>Subject pickers, a course catalogue, a year × trimester grid, a details panel.</td>
+                <td>Browser</td>
+                <td>Yes, simplified. Ordinary buttons and selects instead of drag-and-drop.</td>
+              </tr>
+              <tr>
+                <th scope="row">API</th>
+                <td>The contract between browser and server: catalogue read, plan create/read/update/delete.</td>
+                <td>Server</td>
+                <td><code>GET /api/health</code> only. Plan routes are documented, not built.</td>
+              </tr>
+              <tr>
+                <th scope="row">Catalogue store</th>
+                <td>Courses, subjects and the links between them.</td>
+                <td>Database</td>
+                <td>Yes: three tables filled by <code>npm run db:import</code>.</td>
+              </tr>
+              <tr>
+                <th scope="row">Plan store</th>
+                <td>One student, several named plans, each a set of (course, year, trimester) placements.</td>
+                <td>Database</td>
+                <td>Tables exist; nothing writes to them yet.</td>
+              </tr>
+              <tr>
+                <th scope="row">Ingest pipeline</th>
+                <td>Read the timetables and programme pages, resolve prerequisites, write the catalogue.</td>
+                <td>Batch</td>
+                <td>Not started. The CSV is a one-off export of that work.</td>
+              </tr>
+              <tr>
+                <th scope="row">Deadline engine</th>
+                <td>The last trimester a programme can still be declared, and the course that breaks first.</td>
+                <td>Server</td>
+                <td>Not started.</td>
+              </tr>
+              <tr>
+                <th scope="row">Rule engine</th>
+                <td>Credit floors and caps, prerequisite order, offering trimester, eligibility, in plain words.</td>
+                <td>Shared</td>
+                <td>Not started.</td>
+              </tr>
+              <tr>
+                <th scope="row">Identity</th>
+                <td>Sign-in with the university account, sessions, read-only share links.</td>
+                <td>Server</td>
+                <td>Not started.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+      <p>HW2 proposed Svelte and PostgreSQL. This prototype uses vanilla TypeScript and SQLite.
+        The ingest pipeline, deadline engine, shared rule engine and identity component are future work.</p>
+      <p>Read <a href="/docs/hw2-components.pdf">Homework 2 (PDF)</a> for the complete design and its tradeoffs,
+        or follow the <a href="/sequence">sequence diagram</a> for what runs today.</p>
+    </main>
+  </body>
+</html>

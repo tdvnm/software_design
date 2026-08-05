@@ -35,7 +35,7 @@ around those ordinary data operations.
 | [REST](https://kreauniv.github.io/comp350/rest.html) | The server is ready for routes under `/api/`. Only the health check is implemented; the resource contract below is a plan for later work. |
 | [Data modelling](https://kreauniv.github.io/comp350/data.html) | `server/schema.sql` defines rows, keys and references. CSV import uses SQL parameters (`?`), not SQL made from user text. |
 | [Concurrency](https://kreauniv.github.io/comp350/conc.html) | `fetch` uses `async`/`await`. The import runs inside a transaction, so a failed row rolls back the batch. |
-| [Trust](https://kreauniv.github.io/comp350/trust.html) | Text enters the DOM through `textContent`. Only designated public files are served: `/`, `/about`, the compiled `/assets/`, the course CSV and the PDFs/images under `/docs/`. A future write API will have to validate browser input and decide whose plan may be changed. |
+| [Trust](https://kreauniv.github.io/comp350/trust.html) | Text enters the DOM through `textContent`. Only designated public files are served: the planner and project pages (`/about`, `/abstract`, `/components`, `/sequence`), the compiled `/assets/`, the course CSV and the PDFs/images under `/docs/`. A future write API will have to validate browser input and decide whose plan may be changed. |
 
 ## Follow one interaction
 
