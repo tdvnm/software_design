@@ -85,11 +85,26 @@ a {
 // ---------------------------------------------------------------- footer
 
 .site-footer {
-  max-width: $content-width;
-  margin: 0 auto;
+  margin-top: $spacing;
   padding: 0.75rem $spacing 1.25rem;
   border-top: 1px solid $color-border-card;
-  font-size: 0.8125rem;
+  background: $color-bg-warm;
+
+  .site-footer-inner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.5rem 1rem;
+    max-width: $content-width;
+    margin: 0 auto;
+    font-size: 0.8125rem;
+    color: $color-text-muted;
+  }
+
+  .brand {
+    font-weight: 700;
+  }
 
   nav {
     display: flex;
@@ -98,15 +113,17 @@ a {
   }
 
   a {
-    color: $color-text;
+    color: $color-text-muted;
     text-decoration: none;
 
     &:hover,
     &:focus-visible {
+      color: $color-text;
       text-decoration: underline;
     }
 
     &[aria-current='page'] {
+      color: $color-text;
       font-weight: 700;
     }
   }
