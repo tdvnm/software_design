@@ -82,6 +82,36 @@ a {
   }
 }
 
+// ---------------------------------------------------------------- footer
+
+.site-footer {
+  max-width: $content-width;
+  margin: 0 auto;
+  padding: 0.75rem $spacing 1.25rem;
+  border-top: 1px solid $color-border-card;
+  font-size: 0.8125rem;
+
+  nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1rem;
+  }
+
+  a {
+    color: $color-text;
+    text-decoration: none;
+
+    &:hover,
+    &:focus-visible {
+      text-decoration: underline;
+    }
+
+    &[aria-current='page'] {
+      font-weight: 700;
+    }
+  }
+}
+
 // ---------------------------------------------------------------- planner
 
 #workspace {
@@ -264,15 +294,6 @@ li {
 
   .table-scroll table {
     min-width: 36rem;
-  }
-
-  .page-nav {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem 1rem;
-    margin: 1rem 0;
-    padding: 0.75rem 0;
-    border-block: 1px solid $color-border-card;
   }
 
   .project-question {
