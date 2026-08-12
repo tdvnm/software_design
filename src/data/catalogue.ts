@@ -17,7 +17,9 @@ export function readCourses(text: string): Course[] {
 }
 
 export async function loadCourses(): Promise<Course[]> {
-  const response = await fetch('/data/courses.csv');
+  const response = await fetch('/api/courses');
   if (!response.ok) throw new Error(`Course download failed (${response.status}).`);
-  return readCourses(await response.text());
+  const courses: Course[] = await response.json();
+  if (courses.length === 0) throw new Error('The database has no courses. Run npm run db:import.');
+  return courses;
 }

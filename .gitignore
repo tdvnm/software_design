@@ -2,3 +2,4 @@ node_modules/
 dist/
 data/*.sqlite*
 .checks/
+__pycache__/
