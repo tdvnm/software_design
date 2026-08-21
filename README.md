@@ -69,7 +69,7 @@ only Python's standard library.
 ```sh
 npm install
 npm run db:init      # create data/tracey.sqlite with empty tables
-npm run db:import    # load data/courses.csv into it (474 courses)
+npm run db:import    # load or update data/courses.csv (474 courses)
 npm run dev          # compile the frontend and start the server
 ```
 
@@ -254,10 +254,13 @@ npm run db:import    # python3 server/import_courses.py
 npm start            # python3 server/run.py
 ```
 
-SQLite stores its tables in `data/tracey.sqlite` (ignored by Git). Importing again
-leaves existing course data alone; to reload the CSV, delete the file and run both
-commands again. Use `TRACEY_DB=/path/to/file.sqlite` to choose a different
-database. `PORT=3001 npm start` changes the server port.
+SQLite stores its tables in `data/tracey.sqlite` (ignored by Git). The importer
+validates the CSV, then updates the catalogue in one transaction, so it can be
+run again after the source changes without affecting saved plans. Use
+`npm run db:import -- --replace` only for a clean catalogue rebuild; it refuses
+to remove course rows while saved plans exist. `--csv path/to/file.csv` imports
+another course snapshot. Use `TRACEY_DB=/path/to/file.sqlite` to choose a
+different database. `PORT=3001 npm start` changes the server port.
 
 ### API
 
