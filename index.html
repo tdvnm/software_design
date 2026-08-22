@@ -9,20 +9,16 @@
     <script type="module" src="/assets/main.js"></script>
   </head>
   <body>
-    <header class="site-header">
-      <a class="brand" href="/">Tracey</a>
-      <nav aria-label="Site">
-        <a href="/" aria-current="page">Planner</a>
-      </nav>
-    </header>
-    <main>
-    <h1>Degree planner</h1>
-    <p>Arrange courses by trimester. This draft lasts until you reload the page.</p>
-    <p id="status" role="status">Loading courses…</p>
+    <main class="planner-shell">
     <fieldset id="workspace" disabled>
       <legend>Degree plan</legend>
-      <section aria-labelledby="programme-title">
-        <h2 id="programme-title">1. Programme</h2>
+      <aside class="programme-panel" aria-labelledby="programme-title">
+        <div class="planner-brand">
+          <a class="brand" href="/">tracey</a>
+          <span>degree planner</span>
+        </div>
+        <h1 id="programme-title">Your programme</h1>
+        <p class="panel-intro">Set a major and minor, then build a trimester-by-trimester plan.</p>
         <label
           >Major
           <select id="major">
@@ -36,11 +32,15 @@
           </select></label
         >
         <p id="programme-summary"></p>
-        <p>These selections only label your plan. Programme requirements are not checked.</p>
-      </section>
-      <section aria-labelledby="catalogue-title">
-        <h2 id="catalogue-title">2. Courses</h2>
-        <label>Search <input id="search" type="search" placeholder="Code or title" /></label>
+        <p class="panel-note">Programme requirements are not checked in this prototype.</p>
+        <p id="status" role="status">Loading courses…</p>
+      </aside>
+      <section class="catalogue-panel" aria-labelledby="catalogue-title">
+        <header class="panel-heading">
+          <span class="eyebrow">Browse</span>
+          <h2 id="catalogue-title">Course catalogue</h2>
+        </header>
+        <label class="search-field">Search <input id="search" type="search" placeholder="Code or title" /></label>
         <label
           >Subject
           <select id="subject">
@@ -55,8 +55,13 @@
         <ul id="catalogue"></ul>
       </section>
       <section class="plan-section" aria-labelledby="plan-title">
-        <h2 id="plan-title">3. My plan</h2>
-        <p id="total"></p>
+        <header class="panel-heading board-heading">
+          <div>
+            <span class="eyebrow">Overview</span>
+            <h2 id="plan-title">My plan</h2>
+          </div>
+          <p id="total"></p>
+        </header>
         <p id="plan-empty">No courses added yet.</p>
         <div class="table-scroll" role="region" aria-labelledby="plan-title" tabindex="0">
           <table>
@@ -75,10 +80,13 @@
           </table>
         </div>
       </section>
-      <section aria-labelledby="details-title">
-        <h2 id="details-title">4. Course details</h2>
+      <aside class="details-panel" aria-labelledby="details-title">
+        <header class="panel-heading">
+          <span class="eyebrow">Selected course</span>
+          <h2 id="details-title">Details</h2>
+        </header>
         <div id="details">Choose Details beside a course.</div>
-      </section>
+      </aside>
     </fieldset>
     </main>
     <footer class="site-footer">
