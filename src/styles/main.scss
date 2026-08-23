@@ -284,6 +284,220 @@ li {
   }
 }
 
+// ---------------------------------------------------------------- planner shell
+
+.planner-shell {
+  width: 100%;
+  max-width: none;
+  min-height: calc(100vh - 3.4rem);
+  margin: 0;
+  padding: 0;
+}
+
+.planner-shell #workspace {
+  display: grid;
+  grid-template-columns: 15rem 21rem minmax(35rem, 1fr) 18rem;
+  min-height: calc(100vh - 3.4rem);
+
+  > section,
+  > aside {
+    min-width: 0;
+    margin: 0;
+    padding: 1.2rem;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+  }
+}
+
+.planner-brand {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin: -1.2rem -1.2rem 1.4rem;
+  padding: 1rem 1.2rem;
+  background: linear-gradient(to bottom, $color-bg-header-start, $color-bg-header-end);
+  border-bottom: 1px solid $color-border;
+
+  .brand {
+    color: $color-accent;
+    font-size: 1.65rem;
+    font-weight: 700;
+    letter-spacing: -0.04em;
+    text-decoration: none;
+  }
+
+  span {
+    color: $color-text-muted;
+    font-size: 0.72rem;
+  }
+}
+
+.programme-panel,
+.details-panel {
+  background: linear-gradient(to bottom, $color-bg-sidebar, $color-bg-sidebar-end);
+}
+
+.programme-panel {
+  border-right: 1px solid $color-border !important;
+
+  h1 {
+    margin: 0 0 0.45rem;
+    font-size: 1.2rem;
+  }
+
+  label {
+    display: grid;
+    gap: 0.3rem;
+    margin: 0.9rem 0;
+    color: $color-text-muted;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+}
+
+.panel-intro,
+.panel-note {
+  color: $color-text-muted;
+  font-size: 0.84rem;
+}
+
+.panel-note {
+  padding-top: 0.8rem;
+  border-top: 1px solid $color-border-card;
+}
+
+.panel-heading {
+  margin-bottom: 1rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid $color-border-card;
+
+  h2 {
+    margin: 0.15rem 0 0;
+    font-size: 1.15rem;
+  }
+}
+
+.eyebrow {
+  color: $color-text-muted;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.catalogue-panel {
+  background: $color-bg-light !important;
+  border-right: 1px solid $color-border !important;
+
+  label {
+    display: grid;
+    gap: 0.25rem;
+    margin: 0 0 0.75rem;
+    color: $color-text-muted;
+    font-size: 0.78rem;
+  }
+
+  input,
+  select {
+    width: 100%;
+  }
+}
+
+#catalogue {
+  max-height: calc(100vh - 22rem);
+  margin: 0;
+
+  li {
+    font-size: 0.84rem;
+  }
+}
+
+#status {
+  margin-top: 1.2rem;
+  font-size: 0.82rem;
+}
+
+.planner-shell .plan-section {
+  padding: 1.4rem 1.6rem !important;
+  background: $color-bg-board;
+  overflow-x: auto;
+
+  .board-heading {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 1rem;
+    border-color: $color-border-board;
+  }
+
+  #total {
+    margin: 0;
+    color: $color-text-muted;
+    font-size: 0.82rem;
+  }
+
+  table {
+    box-shadow: $shadow-card;
+  }
+
+  td {
+    height: 7rem;
+    background: rgba(255, 255, 255, 0.6);
+  }
+
+  td p {
+    margin: 0.6rem 0 0;
+    color: $color-text-muted;
+    font-size: 0.75rem;
+  }
+}
+
+.details-panel {
+  border-left: 1px solid $color-border !important;
+
+  #details {
+    color: $color-text-muted;
+    font-size: 0.9rem;
+  }
+
+  #details h3 {
+    color: $color-text;
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 78rem) {
+  .planner-shell #workspace {
+    grid-template-columns: 14rem 19rem minmax(32rem, 1fr);
+  }
+
+  .details-panel {
+    grid-column: 1 / -1;
+    border-top: 1px solid $color-border !important;
+    border-left: 0 !important;
+  }
+}
+
+@media (max-width: 58rem) {
+  .planner-shell #workspace {
+    display: block;
+  }
+
+  .planner-shell #workspace > section,
+  .planner-shell #workspace > aside {
+    border: 0 !important;
+    border-bottom: 1px solid $color-border !important;
+  }
+
+  #catalogue {
+    max-height: 24rem;
+  }
+}
+
 // ---------------------------------------------------------------- about page
 
 .about {
