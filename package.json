@@ -5,8 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "npm run build && npm start",
-    "check": "tsc --noEmit",
-    "build": "tsc && sass src/styles/main.scss dist/styles/main.css --no-source-map",
+    "check": "node scripts/check.mjs",
+    "build": "node scripts/build.mjs && sass src/styles/main.scss dist/styles/main.css --no-source-map",
     "start": "python3 server/run.py",
     "db:init": "python3 server/init_db.py",
     "db:import": "python3 server/import_courses.py",
@@ -16,7 +16,6 @@
     "node": ">=22.13.0"
   },
   "devDependencies": {
-    "sass": "^1.101.0",
-    "typescript": "^5.0.0"
+    "sass": "^1.101.0"
   }
 }
