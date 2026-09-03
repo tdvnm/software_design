@@ -14,3 +14,10 @@ export function createButton(label, action) {
 export function addOption(select, value, label = value) {
     select.add(new Option(label, value));
 }
+
+export function element(tag, className = '', text = '') {
+    const node = document.createElement(tag);
+    node.className = className;
+    node.textContent = text;
+    return node;
+}

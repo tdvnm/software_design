@@ -101,3 +101,15 @@ body:not(.planner-page) section, .card { background: var(--paper); border: 1px s
 .about .project-question { padding: 1rem; border-left: 3px solid var(--accent); background: var(--rail-end); }
 @media (max-width: 1050px) { #workspace { grid-template-columns: 185px 230px minmax(320px, 1fr); } .details-panel { grid-column: 1 / -1; border-top: 1px solid var(--border); } }
 @media (max-width: 760px) { #workspace { display: block; height: auto; } #catalogue { max-height: 420px; } .plan-section { min-height: 650px; } .programme-panel { overflow: visible; } .plan-table { min-width: 430px; } }
+#catalogue li.catalogue-card { padding: 0; overflow: hidden; background: var(--card); }
+#catalogue li[data-type=core] { background: var(--core); }
+#catalogue li[data-type=elective] { background: var(--elective); }
+#catalogue li[data-type=other] { background: var(--paper); }
+#catalogue .course-info { display: flex; flex-direction: column; gap: .25rem; width: 100%; padding: .75rem .8rem .3rem; margin: 0; border: 0; border-radius: 0; text-align: left; background: transparent; box-shadow: none; }
+.course-code { font-size: 14px; font-weight: 700; }
+.course-title { font-size: 12px; line-height: 1.35; }
+.card-footer { display: flex; align-items: center; justify-content: space-between; padding: .3rem .6rem .5rem .8rem; }
+.course-credits { font-size: 10px; color: var(--muted); }
+#catalogue .add-course { font-size: 10px; padding: .2rem .45rem; margin: 0; box-shadow: none; background: #ffffff55; }
+#catalogue .is-placed { opacity: .6; border-style: dashed; box-shadow: none; }
+#catalogue .is-selected { outline: 2px solid var(--accent); outline-offset: -2px; }
