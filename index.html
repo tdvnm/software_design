@@ -1,105 +1,63 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Tracey — basic prototype</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu+Sans:wght@400;700&display=swap" />
-    <link rel="stylesheet" href="/assets/styles/main.css" />
-    <script type="module" src="/assets/main.js"></script>
-  </head>
-  <body>
-    <main class="planner-shell">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#f6eaea" />
+  <meta name="description" content="A little room to plan your degree. Explore courses and arrange your years at Krea." />
+  <title>tracey · your degree, laid out</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu+Sans:wght@400;500;600;700&display=swap" />
+  <link rel="stylesheet" href="/assets/styles/main.css" />
+  <script type="module" src="/assets/main.js"></script>
+</head>
+<body class="planner-page">
+  <a class="skip-link" href="#plan-title">skip to your plan</a>
+  <main class="planner-shell">
     <fieldset id="workspace" disabled>
-      <legend>Degree plan</legend>
-      <aside class="programme-panel" aria-labelledby="programme-title">
-        <div class="planner-brand">
-          <a class="brand" href="/">tracey</a>
-          <span>degree planner</span>
+      <legend class="sr-only">Degree planner</legend>
+      <aside class="programme-panel" aria-label="Your programme">
+        <header class="col-header brand-header"><h1><small>kreabot's</small> <a href="/">tracey</a></h1><span class="brand-mark" aria-hidden="true">✳</span></header>
+        <div class="programme-controls">
+          <p class="section-label">your programme</p>
+          <label class="control-row"><span>major</span><select id="major"><option value="">undecided</option></select></label>
+          <label class="control-row"><span>minor</span><select id="minor"><option value="">none</option></select></label>
+          <p id="programme-summary" class="muted"></p>
         </div>
-        <h1 id="programme-title">Your programme</h1>
-        <p class="panel-intro">Set a major and minor, then build a trimester-by-trimester plan.</p>
-        <label
-          >Major
-          <select id="major">
-            <option value="">Undecided</option>
-          </select></label
-        >
-        <label
-          >Minor
-          <select id="minor">
-            <option value="">None</option>
-          </select></label
-        >
-        <p id="programme-summary"></p>
-        <p class="panel-note">Programme requirements are not checked in this prototype.</p>
-        <p id="status" role="status">Loading courses…</p>
+        <section class="hints-section" aria-labelledby="hints-title">
+          <h2 id="hints-title" class="section-bar">hints</h2>
+          <div class="hints-body"><p class="muted">A little space to figure things out. Add a course to start your plan.</p><div id="hints"></div></div>
+        </section>
+        <p id="status" role="status" aria-live="polite">loading courses…</p>
+        <nav class="project-links" aria-label="Project pages"><a href="/about">about</a><a href="/abstract">abstract</a><a href="/components">components</a><a href="/sequence">sequence</a></nav>
       </aside>
       <section class="catalogue-panel" aria-labelledby="catalogue-title">
-        <header class="panel-heading">
-          <span class="eyebrow">Browse</span>
-          <h2 id="catalogue-title">Course catalogue</h2>
-        </header>
-        <label class="search-field">Search <input id="search" type="search" placeholder="Code or title" /></label>
-        <label
-          >Subject
-          <select id="subject">
-            <option value="">All subjects</option>
-          </select></label
-        >
-        <label
-          >Add to
-          <select id="term"></select
-        ></label>
-        <p id="count"></p>
-        <ul id="catalogue"></ul>
+        <header class="col-header"><h2 id="catalogue-title">catalogue</h2><span aria-hidden="true">⌕</span></header>
+        <div class="catalogue-controls">
+          <label class="sr-only" for="search">Search courses</label><input id="search" type="search" placeholder="search course" autocomplete="off" />
+          <label class="sr-only" for="subject">Subject</label><select id="subject"><option value="">all subjects</option></select>
+          <div id="quick-filters" class="quick-filters"></div>
+          <label class="target-row" for="term">add to <select id="term"></select></label>
+          <p id="count" class="muted" aria-live="polite"></p>
+        </div>
+        <ul id="catalogue" aria-label="Courses"></ul>
       </section>
       <section class="plan-section" aria-labelledby="plan-title">
-        <header class="panel-heading board-heading">
-          <div>
-            <span class="eyebrow">Overview</span>
-            <h2 id="plan-title">My plan</h2>
+        <header class="col-header board-heading"><h2 id="plan-title" tabindex="-1">your plan</h2><p id="total"></p></header>
+        <div class="board-toolbar"><span class="muted">a little room for what's next</span></div>
+        <div class="board-content">
+          <p id="plan-empty" class="empty-note">Your plan starts here. Pick a course on the left, then add it to a trimester.</p>
+          <div class="table-scroll" role="region" aria-label="Four-year plan" tabindex="0">
+            <table class="plan-table"><caption class="sr-only">Four-year plan</caption><thead><tr><th scope="col"><span class="sr-only">Year</span></th><th scope="col">trimester 1</th><th scope="col">trimester 2</th><th scope="col">trimester 3</th></tr></thead><tbody id="board"></tbody></table>
           </div>
-          <p id="total"></p>
-        </header>
-        <p id="plan-empty">No courses added yet.</p>
-        <div class="table-scroll" role="region" aria-labelledby="plan-title" tabindex="0">
-          <table>
-            <caption>
-              Four-year plan
-            </caption>
-            <thead>
-              <tr>
-                <th scope="col">Year</th>
-                <th scope="col">Trimester 1</th>
-                <th scope="col">Trimester 2</th>
-                <th scope="col">Trimester 3</th>
-              </tr>
-            </thead>
-            <tbody id="board"></tbody>
-          </table>
         </div>
+        <p class="board-footnote">✳ &nbsp; still under development</p>
       </section>
       <aside class="details-panel" aria-labelledby="details-title">
-        <header class="panel-heading">
-          <span class="eyebrow">Selected course</span>
-          <h2 id="details-title">Details</h2>
-        </header>
-        <div id="details">Choose Details beside a course.</div>
+        <header class="col-header"><h2 id="details-title">course</h2><span aria-hidden="true">↗</span></header>
+        <div id="details"><div class="details-empty"><span aria-hidden="true">↖</span><p>click a course to see its details</p><small>the next piece of your plan might be one click away.</small></div></div>
       </aside>
     </fieldset>
-    </main>
-    <footer class="site-footer">
-      <div class="site-footer-inner">
-        <span class="brand">Tracey</span>
-        <nav aria-label="Footer">
-          <a href="/" aria-current="page">Planner</a>
-          <a href="/abstract">Abstract</a>
-          <a href="/components">Components</a>
-          <a href="/sequence">Sequence</a>
-          <a href="/about">About the project</a>
-        </nav>
-      </div>
-    </footer>
-  </body>
+  </main>
+  <noscript><p class="empty-note">Enable JavaScript to use the planner. You can still read the <a href="/about">project pages</a>.</p></noscript>
+</body>
 </html>
