@@ -1,3 +1,4 @@
+import { metadata } from './metadata.js';
 import { parseCsv } from '../lib/csv.js';
 export function readCourses(text) {
     const [header, ...rows] = parseCsv(text);
@@ -20,5 +21,5 @@ export async function loadCourses() {
     const courses = await response.json();
     if (courses.length === 0)
         throw new Error('The database has no courses. Run npm run db:import.');
-    return courses;
+    return courses.map(course => ({ ...course, ...metadata[course.code] }));
 }
