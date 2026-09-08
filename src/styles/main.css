@@ -122,3 +122,16 @@ body:not(.planner-page) section, .card { background: var(--paper); border: 1px s
 .plan-table .chip-label { flex: 1; min-width: 0; text-align: left; padding: .35rem .4rem; font-size: 10px; font-weight: 600; overflow-wrap: anywhere; }
 .plan-table .chip-label, .plan-table .chip-remove { border: 0; background: none; box-shadow: none; }
 .plan-table .chip-remove { flex-shrink: 0; padding: .25rem; font-size: 13px; opacity: .6; }
+.detail-card { background: linear-gradient(var(--card), var(--paper)); padding: 1rem; border: 1px solid var(--line); border-radius: 5px; box-shadow: var(--shine), var(--shadow); }
+.detail-code { display: block; font-size: 20px; margin-bottom: .4rem; }
+#details .detail-card h3 { font-size: 15px; font-weight: 500; margin: 0; }
+.detail-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: .4rem; margin: 1rem 0; }
+.detail-stat { display: flex; flex-direction: column; justify-content: center; text-align: center; gap: .4rem; padding: .7rem .2rem; border: 1px solid var(--line); background: var(--paper); border-radius: 4px; box-shadow: var(--shine); }
+.detail-stat small { font-size: 9px; text-transform: uppercase; color: var(--muted); }
+.detail-stat strong { font-size: 13px; }
+#details .section-label { margin: 1.3rem 0 .6rem; }
+.detail-description { padding: .8rem; font-size: 12px; line-height: 1.6; background: var(--paper); border: 1px solid var(--line); border-radius: 4px; white-space: pre-line; }
+.detail-faculty, .detail-subjects { font-size: 11px; }
+.detail-faculty { margin-top: 1rem; font-style: italic; }
+.detail-links { display: flex; flex-wrap: wrap; gap: .4rem; }
+.detail-links button { padding: .3rem .5rem; font-size: 11px; }
