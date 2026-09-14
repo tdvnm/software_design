@@ -93,8 +93,10 @@ test('foundation starter contains the twelve core courses exactly once', () => {
   assert.equal(courses.length, 12);
   assert.equal(new Set(courses.map(c => c.code)).size, 12);
   assert.equal(countCredits(courses), 36);
-  assert.equal(plan['1-1'].length, 4);
-  assert.equal(plan['1-2'].length, 4);
+  assert.equal(plan['1-1'].length, 3);
+  assert.equal(plan['1-2'].length, 3);
+  assert.equal(plan['1-3'].length, 3);
+  assert.equal(plan['2-1'].length, 2);
   assert.equal(plan['3-3'][0].code, 'KCCS190');
 });
 

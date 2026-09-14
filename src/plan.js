@@ -42,12 +42,21 @@ export function moveCourse(plan, termId, course) {
     plan[termId].push(course);
 }
 
+// The foundation year spreads the core courses over 1-1, 1-2, 1-3 and 2-1.
+// Each core course only runs in some trimesters, so the courses with the least
+// choice are placed first, each into the emptiest trimester that offers it.
+const foundationTerms = ['1-1', '1-2', '1-3', '2-1'];
 export function foundationPlan(courses) {
     const plan = createPlan();
-    const core = courses.filter(c => c.subjects.includes('core')).sort((a, b) => a.code.localeCompare(b.code));
-    let index = 0;
+    const core = courses.filter(c => c.subjects.includes('core'))
+        .sort((a, b) => (a.offered?.length || 3) - (b.offered?.length || 3) || a.code.localeCompare(b.code));
     for (const course of core) {
-        const term = /engaging with the environment/i.test(course.title) ? `3-${course.offered?.[0] || 3}` : ['1-1', '1-2', '1-3', '2-1'][Math.min(3, Math.floor(index++ / 4))];
+        if (/engaging with the environment/i.test(course.title)) {
+            plan[`3-${course.offered?.[0] || 3}`].push(course);
+            continue;
+        }
+        const fits = foundationTerms.filter(id => !course.offered?.length || course.offered.includes(Number(id.at(-1))));
+        const term = (fits.length ? fits : foundationTerms).reduce((a, b) => plan[b].length < plan[a].length ? b : a);
         plan[term].push(course);
     }
     return plan;
