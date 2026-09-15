@@ -1,6 +1,6 @@
 import { makeDraggable, makeDropTarget } from '../lib/drag.js';
 import { createButton, element, getElement } from '../lib/dom.js';
-import { countCredits, terms, years } from '../plan.js';
+import { countCredits, graduationCredits, terms, years } from '../plan.js';
 
 export function renderBoard(options) {
     const { plan, onRemove, onDetails } = options;
@@ -45,6 +45,11 @@ export function renderBoard(options) {
         return row;
     });
     getElement('board').replaceChildren(...rows);
-    getElement('total').textContent = `${countCredits(Object.values(plan).flat())} credits planned`;
+    const planned = countCredits(Object.values(plan).flat());
+    const target = graduationCredits(options.fourYear);
+    const left = target - planned;
+    getElement('total').textContent = left > 0
+        ? `${planned} of ${target} credits planned · ${left} to go`
+        : `${planned} of ${target} credits planned · ${left === 0 ? 'minimum met' : `${-left} over the minimum`}`;
     getElement('plan-empty').hidden = Object.values(plan).some(courses => courses.length > 0);
 }

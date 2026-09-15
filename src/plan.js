@@ -22,6 +22,11 @@ export function countCredits(courses) {
     return courses.reduce((total, course) => total + course.credits, 0);
 }
 
+// Graduation Requirements in the manual: 120 credits to finish the three-year
+// programme, 160 for the four-year one, with ceilings of 128 and 176.
+export const graduationCredits = fourYear => (fourYear === false ? 120 : 160);
+export const creditCeiling = fourYear => (fourYear === false ? 128 : 176);
+
 // Where a course should land when nobody picked a trimester: the first one it
 // is actually offered in, in a year the student is eligible for, that still has
 // room under the 20-credit limit.

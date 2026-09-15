@@ -1,4 +1,4 @@
-import { countCredits, terms } from './plan.js';
+import { countCredits, creditCeiling, graduationCredits, terms } from './plan.js';
 import { requirementsFor } from './components/programme.js';
 
 // These are planning hints from Tracey's catalogue snapshot, not degree approval.
@@ -28,8 +28,11 @@ export function getHints(plan, courses, preferences) {
     }
     if (heavy > 2) hints.push({ kind: 'warn', text: 'More than two trimesters exceed the recommended 16-credit load.' });
     const total = countCredits(Object.values(plan).flat());
-    const cap = preferences.fourYear ? 176 : 128;
+    const cap = creditCeiling(preferences.fourYear);
+    const minimum = graduationCredits(preferences.fourYear);
+    const duration = preferences.fourYear === false ? 'three' : 'four';
     if (total > cap) hints.push({ kind: 'warn', text: `${total} credits is above the ${cap}-credit programme ceiling.` });
+    else if (total < minimum) hints.push({ kind: 'info', text: `${minimum - total} more credits to reach the ${minimum} needed to finish the ${duration}-year programme.` });
     const coreLeft = courses.filter(c => c.subjects.includes('core') && !placements.has(c.code)).length;
     if (coreLeft) hints.push({ kind: 'info', text: `${coreLeft} foundation core course${coreLeft === 1 ? '' : 's'} still to place.` });
     return hints;

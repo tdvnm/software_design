@@ -138,6 +138,14 @@ test('foundation starter honours the environment course term and avoids spurious
   assert.ok(!hints.some(h => h.text.includes('timetable snapshot')));
 });
 
+test('the credits still to earn follow the selected degree duration', () => {
+  const plan = foundationPlan(catalogue);
+  assert.equal(countCredits(Object.values(plan).flat()), 36);
+  const left = preferences => getHints(plan, catalogue, preferences).find(h => h.text.includes('needed to finish'))?.text;
+  assert.match(left(defaultPreferences), /^124 more credits to reach the 160 .*four-year/);
+  assert.match(left({ ...defaultPreferences, fourYear: false }), /^84 more credits to reach the 120 .*three-year/);
+});
+
 test('concentration credit notes follow the selected degree duration', () => {
   const preferences = { ...defaultPreferences, major: 'mathematics', concentration: 'computer science', structure: 'major-conc' };
   assert.equal(requirementsFor(preferences)[1].total_credits, 20);

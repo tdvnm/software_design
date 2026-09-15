@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git -C /home/toad/code/software_design log --oneline -15)",
+      "Bash(python3 *)",
+      "Bash(node *)",
+      "Bash(npm test *)",
+      "Bash(npm run *)",
+      "Bash(git add *)",
+      "Bash(GIT_AUTHOR_DATE=2026-09-15T21:05:00+05:30 GIT_COMMITTER_DATE=2026-09-15T21:05:00+05:30 git commit -q -m 'say how many credits are left to graduate *)"
+    ]
+  }
+}
