@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "npm run build && npm start",
     "check": "node scripts/check.mjs",
-    "build": "node scripts/build.mjs",
+    "build": "python3 scripts/build.py",
     "start": "python3 server/run.py",
     "db:init": "python3 server/init_db.py",
     "db:import": "python3 server/import_courses.py",
