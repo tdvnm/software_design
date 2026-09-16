@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>About Tracey</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu+Sans:wght@400;700&display=swap" />
+    <link rel="stylesheet" href="/assets/styles/main.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="/">Tracey</a>
+      <nav aria-label="Site">
+        <a href="/">Planner</a>
+        <a href="/about" aria-current="page">About the project</a>
+      </nav>
+    </header>
+    <main class="about">
+      <h1>About Tracey</h1>
+      <p>
+        Shubhro, Radha, Gangasagar and Arav. Software Design Practical (COMP350), Krea University.
+        This page collects the two homework documents the project grew out of and a sequence
+        diagram of what the prototype does today.
+      </p>
+
+      <section aria-labelledby="idea-title">
+        <h2 id="idea-title">The idea, in five sentences</h2>
+        <p>
+          <strong>Introduction.</strong> At Krea's School of Interwoven Arts and Sciences a student
+          takes a major from one of thirteen subjects and may add a second major, a minor or a
+          concentration on top of it, and most students make that second decision somewhere in year
+          one or year two, after they have seen what the subjects are actually like.
+        </p>
+        <p>
+          <strong>Related work.</strong> To make it they have the timetable spreadsheet the academic
+          office circulates before each trimester, a credit table on each subject's page, one mentor
+          meeting, and whatever seniors remember, while universities that run a student information
+          system answer the same question with degree-audit software such as Workday Student,
+          Ellucian Degree Works or Stellic.
+        </p>
+        <p>
+          <strong>Problem.</strong> Every major and minor has a last trimester by which it has to be
+          started, because its required courses sit in a prerequisite chain and most of them run in
+          only one trimester a year: a mathematics major has to begin with MATH191 in the third
+          trimester of year one or the chain MATH230, MATH231, MATH332, MATH333, MATH434 no longer
+          fits before graduation, a biology minor has to begin in the first trimester of year one,
+          sociology can be picked up as late as the eighth, and not one of those dates appears in
+          any document the university publishes.
+        </p>
+        <p>
+          <strong>Solution.</strong> Tracey will compute that date, out of a catalogue rebuilt from
+          the seven published timetables into 474 courses with their offering trimesters, year
+          eligibility and a prerequisite graph, joined to the requirement sets on the thirteen
+          programme pages, and a walk over that graph that gives the earliest trimester each
+          required course can be taken, which turns into a plain answer: the last trimester you can
+          still declare this combination, and the course that breaks first if you miss it.
+        </p>
+        <p>
+          <strong>Validation.</strong> Replay two past cohorts' registrations and see whether the
+          students who declared after the computed deadline are the ones who dropped the second
+          major, overloaded a trimester or graduated a term late, and show each department's
+          computed deadline to the mentors who already advise on it and ask where it is wrong.
+        </p>
+        <p>The full proposal, with the one-page summary and the Business Model Canvas, is in the documents below.</p>
+      </section>
+
+      <section aria-labelledby="prototype-title">
+        <h2 id="prototype-title">What this prototype does</h2>
+        <p>
+          The <a href="/">planner</a> is the first small slice of that idea, built with plain HTML,
+          TypeScript and Sass, native browser modules, and Node's built-in HTTP server and SQLite.
+        </p>
+        <ul>
+          <li>Major and minor selectors that label the plan. Programme requirements are not checked.</li>
+          <li>A catalogue of the 474 real courses, searchable by code or title and filterable by subject.</li>
+          <li>Course details: code, title, subjects, credits and description.</li>
+          <li>A year-by-trimester table: pick a trimester, add a course, remove it again.</li>
+          <li>Credit totals per trimester and overall, and no course can be added twice.</li>
+        </ul>
+        <p>
+          The plan lives in the browser and resets on reload. Prerequisite checks, the declaration
+          deadline, hints, saved plans and sign-in are deliberately not built yet.
+        </p>
+      </section>
+
+      <section aria-labelledby="sequence-title">
+        <h2 id="sequence-title">How it works</h2>
+        <p>
+          Four participants: the <strong>Admin</strong> who sets the database up, the
+          <strong>User</strong> planning in the browser, the <strong>Server</strong> and the
+          <strong>Database</strong>. Solid arrows are requests, dashed arrows are replies.
+        </p>
+        <figure>
+          <img src="/docs/sequence-diagram.svg" alt="Sequence diagram: the admin initialises and imports the database; the user loads the page and the course CSV, then searches, filters, adds and removes courses in the browser without further requests; the health check queries SQLite; plan routes are marked as future work." width="1065" height="1989" />
+          <figcaption>
+            Setup runs once from the command line. Planning needs the server only for the page and
+            the course CSV; every edit after that stays in the browser. The plan routes at the bottom
+            are documented but not implemented.
+          </figcaption>
+        </figure>
+      </section>
+
+      <section aria-labelledby="components-title">
+        <h2 id="components-title">Components from the design, and where they stand</h2>
+        <p>
+          Assignment 2 laid out the full system as eight components. This is how much of each the
+          prototype contains.
+        </p>
+        <div class="table-scroll">
+          <table>
+            <thead>
+              <tr>
+                <th scope="col">Component</th>
+                <th scope="col">Responsibility</th>
+                <th scope="col">Runs</th>
+                <th scope="col">In this prototype</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">Client</th>
+                <td>Subject pickers, a course catalogue, a year × trimester grid, a details panel.</td>
+                <td>Browser</td>
+                <td>Yes, simplified. Ordinary buttons and selects instead of drag-and-drop.</td>
+              </tr>
+              <tr>
+                <th scope="row">API</th>
+                <td>The contract between browser and server: catalogue read, plan create/read/update/delete.</td>
+                <td>Server</td>
+                <td><code>GET /api/health</code> only. Plan routes are documented, not built.</td>
+              </tr>
+              <tr>
+                <th scope="row">Catalogue store</th>
+                <td>Courses, subjects and the links between them.</td>
+                <td>Database</td>
+                <td>Yes: three tables filled by <code>npm run db:import</code>.</td>
+              </tr>
+              <tr>
+                <th scope="row">Plan store</th>
+                <td>One student, several named plans, each a set of (course, year, trimester) placements.</td>
+                <td>Database</td>
+                <td>Tables exist; nothing writes to them yet.</td>
+              </tr>
+              <tr>
+                <th scope="row">Ingest pipeline</th>
+                <td>Read the timetables and programme pages, resolve prerequisites, write the catalogue.</td>
+                <td>Batch</td>
+                <td>Not started. The CSV is a one-off export of that work.</td>
+              </tr>
+              <tr>
+                <th scope="row">Deadline engine</th>
+                <td>The last trimester a programme can still be declared, and the course that breaks first.</td>
+                <td>Server</td>
+                <td>Not started.</td>
+              </tr>
+              <tr>
+                <th scope="row">Rule engine</th>
+                <td>Credit floors and caps, prerequisite order, offering trimester, eligibility, in plain words.</td>
+                <td>Shared</td>
+                <td>Not started.</td>
+              </tr>
+              <tr>
+                <th scope="row">Identity</th>
+                <td>Sign-in with the university account, sessions, read-only share links.</td>
+                <td>Server</td>
+                <td>Not started.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section aria-labelledby="documents-title">
+        <h2 id="documents-title">Documents</h2>
+        <ul class="documents">
+          <li>
+            <a href="/docs/hw1-proposal.pdf">Homework 1: the proposal</a> (PDF)
+            <span class="muted">— five-sentence abstract, one-page summary, Business Model Canvas.</span>
+          </li>
+          <li>
+            <a href="/docs/hw2-components.pdf">Homework 2: components, interactions and the choices behind them</a> (PDF)
+            <span class="muted">— the full design: browser, server, database, batch work, algorithms.</span>
+          </li>
+          <li>
+            <a href="/docs/sequence-diagram.svg">Sequence diagram</a> (SVG)
+            <span class="muted">— the image above, on its own.</span>
+          </li>
+        </ul>
+        <p class="muted">
+          The Markdown versions, the Mermaid source of the diagram and the note on how the code
+          follows the COMP350 chapters are in the repository's <code>docs/</code> folder.
+        </p>
+      </section>
+    </main>
+  </body>
+</html>

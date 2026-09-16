@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Tracey — basic prototype</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu+Sans:wght@400;700&display=swap" />
+    <link rel="stylesheet" href="/assets/styles/main.css" />
+    <script type="module" src="/assets/main.js"></script>
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="/">Tracey</a>
+      <nav aria-label="Site">
+        <a href="/" aria-current="page">Planner</a>
+        <a href="/about">About the project</a>
+      </nav>
+    </header>
+    <main>
+    <h1>Degree planner</h1>
+    <p>Arrange courses by trimester. This draft lasts until you reload the page.</p>
+    <p id="status" role="status">Loading courses…</p>
+    <fieldset id="workspace" disabled>
+      <legend>Degree plan</legend>
+      <section aria-labelledby="programme-title">
+        <h2 id="programme-title">1. Programme</h2>
+        <label
+          >Major
+          <select id="major">
+            <option value="">Undecided</option>
+          </select></label
+        >
+        <label
+          >Minor
+          <select id="minor">
+            <option value="">None</option>
+          </select></label
+        >
+        <p id="programme-summary"></p>
+        <p>These selections only label your plan. Programme requirements are not checked.</p>
+      </section>
+      <section aria-labelledby="catalogue-title">
+        <h2 id="catalogue-title">2. Courses</h2>
+        <label>Search <input id="search" type="search" placeholder="Code or title" /></label>
+        <label
+          >Subject
+          <select id="subject">
+            <option value="">All subjects</option>
+          </select></label
+        >
+        <label
+          >Add to
+          <select id="term"></select
+        ></label>
+        <p id="count"></p>
+        <ul id="catalogue"></ul>
+      </section>
+      <section aria-labelledby="plan-title">
+        <h2 id="plan-title">3. My plan</h2>
+        <p id="total"></p>
+        <p id="plan-empty">No courses added yet.</p>
+        <div class="table-scroll">
+          <table>
+            <caption>
+              Four-year plan
+            </caption>
+            <thead>
+              <tr>
+                <th scope="col">Year</th>
+                <th scope="col">Trimester 1</th>
+                <th scope="col">Trimester 2</th>
+                <th scope="col">Trimester 3</th>
+              </tr>
+            </thead>
+            <tbody id="board"></tbody>
+          </table>
+        </div>
+      </section>
+      <section aria-labelledby="details-title">
+        <h2 id="details-title">4. Course details</h2>
+        <div id="details">Choose Details beside a course.</div>
+      </section>
+    </fieldset>
+    </main>
+  </body>
+</html>
