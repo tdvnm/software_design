@@ -26,14 +26,15 @@
               <tr><th scope="row">HTML</th><td>Page structure, labelled forms and the trimester table.</td></tr>
               <tr><th scope="row">TypeScript</th><td>Course and plan types, browser events and data operations. Compiled to native JavaScript modules.</td></tr>
               <tr><th scope="row">Sass / CSS</th><td>Shared colour and spacing variables, cards, controls and responsive layouts.</td></tr>
-              <tr><th scope="row">Node.js HTTP</th><td>The built-in <code>node:http</code> module serves pages, assets and the health endpoint.</td></tr>
-              <tr><th scope="row">SQLite</th><td>The built-in <code>node:sqlite</code> module creates tables and imports the course CSV. The browser is not connected to it yet.</td></tr>
-              <tr><th scope="row">Node.js test runner</th><td><code>node:test</code> checks CSV parsing, plan operations and server routes.</td></tr>
+              <tr><th scope="row">Python</th><td>The standard-library <code>http.server</code> module serves pages, assets and the course/plan API. No web framework.</td></tr>
+              <tr><th scope="row">SQLite3</th><td>Python's built-in <code>sqlite3</code> module creates the tables, imports the course CSV and answers the API's queries. The planner page does not read from it yet.</td></tr>
+              <tr><th scope="row">Tests</th><td><code>node:test</code> checks CSV parsing and plan operations in the browser code; <code>unittest</code> checks the server's routes and API.</td></tr>
             </tbody>
           </table>
         </div>
-        <p>TypeScript and Sass are the only npm build dependencies. The prototype has no frontend
-          framework, backend framework or ORM.</p>
+        <p>TypeScript and Sass are the only npm build dependencies, and the server needs nothing
+          beyond Python's standard library. The prototype has no frontend framework, backend
+          framework or ORM.</p>
       </section>
       <section aria-labelledby="frontend-title">
         <h2 id="frontend-title">Frontend components</h2>

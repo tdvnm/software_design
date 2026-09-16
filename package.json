@@ -7,10 +7,10 @@
     "dev": "npm run build && npm start",
     "check": "tsc --noEmit",
     "build": "tsc && sass src/styles/main.scss dist/styles/main.css --no-source-map",
-    "start": "node server/index.js",
-    "db:init": "node server/init.js",
-    "db:import": "npm run build && node server/import.js",
-    "test": "npm run build && node --test tests/*.test.js"
+    "start": "python3 server/run.py",
+    "db:init": "python3 server/init_db.py",
+    "db:import": "python3 server/import_courses.py",
+    "test": "npm run build && node --test tests/*.test.js && python3 -m unittest discover -s tests -p 'test_*.py'"
   },
   "engines": {
     "node": ">=22.13.0"

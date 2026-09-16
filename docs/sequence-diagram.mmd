@@ -42,5 +42,5 @@ sequenceDiagram
     Database-->>Server: ok
     Server-->>Admin: {"status":"ok","database":"sqlite","stage":"setup"}
 
-    Note over Admin,Database: Future, not implemented
-    Note over User,Database: GET /api/courses<br/>GET / POST /api/plans<br/>GET / PUT / DELETE /api/plans/:id
+    Note over Admin,Database: Built on the server, not yet called by the planner page
+    Note over User,Database: GET /api/courses<br/>POST /api/plans<br/>GET / PATCH /api/plans/:id<br/>PUT / DELETE /api/plans/:id/items/:code

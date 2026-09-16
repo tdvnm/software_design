@@ -1,9 +1,9 @@
 # Sequence diagram
 
 Four participants: the **Admin** who sets the database up, the **User** (a
-student in the browser), the **Server** (`server/app.js`) and the **Database**
+student in the browser), the **Server** (`server/app.py`) and the **Database**
 (`data/tracey.sqlite`). It shows what the prototype actually does today, and
-marks the plan-saving routes as future work.
+marks the plan-saving routes the server now answers but the planner page does not call yet.
 
 ![Tracey sequence diagram](sequence-diagram.svg)
 
@@ -54,8 +54,8 @@ sequenceDiagram
     Database-->>Server: ok
     Server-->>Admin: {"status":"ok","database":"sqlite","stage":"setup"}
 
-    Note over Admin,Database: Future, not implemented
-    Note over User,Database: GET /api/courses<br/>GET / POST /api/plans<br/>GET / PUT / DELETE /api/plans/:id
+    Note over Admin,Database: Built on the server, not yet called by the planner page
+    Note over User,Database: GET /api/courses<br/>POST /api/plans<br/>GET / PATCH /api/plans/:id<br/>PUT / DELETE /api/plans/:id/items/:code
 ```
 
 ## Reading it
@@ -68,11 +68,12 @@ sequenceDiagram
   `data/courses.csv`. Everything in the `loop` — search, filter, details, add,
   remove — happens in the browser with data it already has. No request is sent
   when the plan changes, so reloading the page clears it.
-- **Health check** is the only API route: `GET /api/health` runs `SELECT 1`
-  against SQLite and reports `stage: "setup"`.
-- **Future** routes are listed but not built. See
-  [course-map.md](course-map.md#backend-setup-and-the-next-step) for the
-  proposed contract.
+- **Health check**: `GET /api/health` runs `SELECT 1` against SQLite and
+  reports `stage: "setup"`.
+- **Course and plan routes** exist on the server (`tests/test_server.py`
+  exercises them) but the planner page still reads the CSV and keeps its plan
+  in memory. Wiring the page to them is the next step; see
+  [course-map.md](course-map.md#backend-setup-and-the-next-step).
 
 ## Files
 
@@ -133,8 +134,8 @@ Server->Database: SELECT 1
 Database-->Server: ok
 Server-->Admin: {"status":"ok","database":"sqlite","stage":"setup"}
 
-==Future, not implemented==
-note over User,Database: GET /api/courses\nGET / POST /api/plans\nGET / PUT / DELETE /api/plans/:id
+==Built on the server, not yet called by the planner page==
+note over User,Database: GET /api/courses\nPOST /api/plans\nGET / PATCH /api/plans/:id\nPUT / DELETE /api/plans/:id/items/:code
 ```
 
 </details>
