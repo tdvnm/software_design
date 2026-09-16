@@ -4,7 +4,7 @@ A small degree-planner frontend written with **vanilla TypeScript, HTML and Sass
 It uses native browser modules and DOM events. TypeScript and Sass are the only
 build dependencies. Node's built-in HTTP server serves the files.
 
-The planner is at `/`. Project pages are linked from the navigation and work
+The planner is at `/`. Project pages are linked from the footer and work
 under whichever domain serves the app; all links use paths relative to that domain.
 The same homework material is also in [`docs/`](docs/) as Markdown and PDF.
 
