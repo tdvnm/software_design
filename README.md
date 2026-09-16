@@ -18,6 +18,22 @@ The same homework material is also in [`docs/`](docs/) as Markdown and PDF.
 
 `/asbtract` is also supported as an alias for `/abstract`.
 
+## Abstract
+
+Tracey is a degree-planner prototype for Krea students choosing a major,
+minor or concentration, built so they can see whether a plan finishes on time
+before committing to it. This version is the Homework 2 frontend: a searchable
+474-course catalogue and a four-year trimester grid, written in vanilla
+TypeScript, HTML and Sass and served by a small Node.js server. A student can
+pick a programme, browse and filter courses, add them to trimesters, watch
+credit totals update and open a course's details, all working in the browser's
+memory. It does not yet compute the last feasible trimester to start a
+programme, check prerequisites or offering patterns, save plans, or
+authenticate users — the questions Homework 1's proposal was written to
+answer. The rest of Homework 2's design (ingest pipeline, deadline engine,
+rule engine, plan persistence and identity) still has to be built on top of
+the SQLite schema already in place.
+
 ## From HW1: why Tracey exists
 
 **Can I still add this major or minor and finish on time?** That is the question
@@ -260,3 +276,24 @@ with direct SQL and parameterised queries. There is no ORM or backend framework.
 
 The homework PDFs and diagram are linked from the website. The Markdown sources
 and course map can be read in the repository.
+
+## TODO
+
+**Done**
+
+- Frontend: programme selectors, catalogue search/filter, four-year trimester
+  board, course details panel, credit totals and duplicate-course prevention.
+- Static pages: Abstract, Components, Sequence and About, plus this README.
+- Server: static file serving, SQLite schema and optional CSV import,
+  `GET /api/health`.
+
+**Needed next**
+
+- [ ] Course/Plan REST API connected to the frontend (it currently reads the
+      CSV directly and never saves a plan)
+- [ ] Ingest pipeline to rebuild the catalogue from university sources instead
+      of a CSV snapshot
+- [ ] Deadline engine: last feasible start trimester and the course that blocks it
+- [ ] Rule engine: prerequisite, offering and credit-load violations
+- [ ] Plan persistence across reloads (plans are in-memory only right now)
+- [ ] Identity: sign-in, sessions and read-only plan sharing
