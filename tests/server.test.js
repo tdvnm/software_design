@@ -59,3 +59,27 @@ test('the health check reads SQLite and other API routes are not there yet', asy
   assert.equal((await fetch(`${base}/api/plans`)).status, 404);
   assert.equal((await fetch(`${base}/api/plans`, { method: 'POST', body: '{}' })).status, 405);
 });
+
+test('project pages load directly with their content and active navigation', async () => {
+  for (const [path, heading, content] of [
+    ['/abstract', 'Project abstract', /Introduction.*Related work.*Problem.*Solution.*Validation/s],
+    ['/components', 'Components and technology stack', /Technology stack.*TypeScript.*Sass.*SQLite.*Frontend components/s],
+    ['/sequence', 'Sequence diagram', /src="\/docs\/sequence-diagram\.svg"/],
+  ]) {
+    const response = await fetch(`${base}${path}`);
+    assert.equal(response.status, 200, path);
+    assert.match(response.headers.get('content-type'), /text\/html/);
+    const html = await response.text();
+    assert.ok(html.includes(`<h1>${heading}</h1>`), path);
+    assert.ok(html.includes(`href="${path}" aria-current="page"`), path);
+    assert.match(html, content, path);
+    const head = await fetch(`${base}${path}`, { method: 'HEAD' });
+    assert.equal(head.status, 200, path);
+    assert.equal(await head.text(), '', path);
+  }
+  const alias = await fetch(`${base}/asbtract`);
+  const canonical = await fetch(`${base}/abstract`);
+  assert.equal(alias.status, 200);
+  assert.equal(await alias.text(), await canonical.text());
+  assert.equal((await fetch(`${base}/unknown-page`)).status, 404);
+});

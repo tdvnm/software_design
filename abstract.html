@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Project abstract — Tracey</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu+Sans:wght@400;700&amp;display=swap" />
+    <link rel="stylesheet" href="/assets/styles/main.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="/">Tracey</a>
+      <nav aria-label="Site">
+        <a href="/">Planner</a>
+        <a href="/abstract" aria-current="page">Abstract</a>
+        <a href="/components">Components</a>
+        <a href="/sequence">Sequence</a>
+        <a href="/about">About the project</a>
+      </nav>
+    </header>
+    <main class="about">
+      <h1>Project abstract</h1>
+      <p>From Homework 1, Software Design Practical (COMP350), Krea University.</p>
+      <p>Shubhro, Radha, Gangasagar and Arav.</p>
+      <p class="project-question">Can I still add this major or minor and finish on time?</p>
+      <p>This is the original proposal. The current prototype provides the catalogue and planning
+        grid; declaration deadlines and prerequisite checks are future work.</p>
+      <section aria-labelledby="idea-title">
+        <h2 id="idea-title">The five-sentence abstract</h2>
+        <p>
+          <strong>Introduction.</strong> At Krea's School of Interwoven Arts and Sciences a student
+          takes a major from one of thirteen subjects and may add a second major, a minor or a
+          concentration on top of it, and most students make that second decision somewhere in year
+          one or year two, after they have seen what the subjects are actually like.
+        </p>
+        <p>
+          <strong>Related work.</strong> To make it they have the timetable spreadsheet the academic
+          office circulates before each trimester, a credit table on each subject's page, one mentor
+          meeting, and whatever seniors remember, while universities that run a student information
+          system answer the same question with degree-audit software such as Workday Student,
+          Ellucian Degree Works or Stellic.
+        </p>
+        <p>
+          <strong>Problem.</strong> Every major and minor has a last trimester by which it has to be
+          started, because its required courses sit in a prerequisite chain and most of them run in
+          only one trimester a year: a mathematics major has to begin with MATH191 in the third
+          trimester of year one or the chain MATH230, MATH231, MATH332, MATH333, MATH434 no longer
+          fits before graduation, a biology minor has to begin in the first trimester of year one,
+          sociology can be picked up as late as the eighth, and not one of those dates appears in
+          any document the university publishes.
+        </p>
+        <p>
+          <strong>Solution.</strong> Tracey will compute that date, out of a catalogue rebuilt from
+          the seven published timetables into 474 courses with their offering trimesters, year
+          eligibility and a prerequisite graph, joined to the requirement sets on the thirteen
+          programme pages, and a walk over that graph that gives the earliest trimester each
+          required course can be taken, which turns into a plain answer: the last trimester you can
+          still declare this combination, and the course that breaks first if you miss it.
+        </p>
+        <p>
+          <strong>Validation.</strong> Replay two past cohorts' registrations and see whether the
+          students who declared after the computed deadline are the ones who dropped the second
+          major, overloaded a trimester or graduated a term late, and show each department's
+          computed deadline to the mentors who already advise on it and ask where it is wrong.
+        </p>
+        <p>Read the <a href="/docs/hw1-proposal.pdf">full HW1 proposal (PDF)</a> for the one-page summary and Business Model Canvas.</p>
+      </section>
+    </main>
+  </body>
+</html>

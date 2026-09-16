@@ -4,9 +4,43 @@ A small degree-planner frontend written with **vanilla TypeScript, HTML and Sass
 It uses native browser modules and DOM events. TypeScript and Sass are the only
 build dependencies. Node's built-in HTTP server serves the files.
 
-The planner is at `/`. The **About page** at `/about` carries the two homework
-documents the project started from and a sequence diagram of what runs today;
-the same material is in [`docs/`](docs/) as Markdown.
+The planner is at `/`. Project pages are linked from the navigation and work
+under whichever domain serves the app; all links use paths relative to that domain.
+The same homework material is also in [`docs/`](docs/) as Markdown and PDF.
+
+| Page | Path | Contents |
+| --- | --- | --- |
+| Planner | `/` | Course catalogue and trimester grid |
+| Abstract | `/abstract` | HW1's five-sentence abstract and proposal PDF |
+| Components | `/components` | Technology stack, frontend modules and HW2 component responsibilities |
+| Sequence | `/sequence` | The sequence diagram, its explanation and the full-size SVG |
+| About | `/about` | Project background, current scope and homework documents |
+
+`/asbtract` is also supported as an alias for `/abstract`.
+
+## From HW1: why Tracey exists
+
+**Can I still add this major or minor and finish on time?** That is the question
+behind [Homework 1](docs/hw1-proposal.md). A credit total alone cannot answer it:
+prerequisites have to be taken in order, and a course may only run in one
+trimester each year. The proposal uses seven published timetables and a
+474-course catalogue to investigate those constraints.
+
+The proposed system would find the last trimester a programme can be started
+while still finishing before graduation, then name the course that prevents a
+late start. Its intended users are students choosing programmes and faculty
+mentors helping them plan. HW1's validation plan is to check the computed dates
+with departments and compare them with two past cohorts' registration histories.
+
+The Business Model Canvas treats adoption as the measure of value: students
+using plans during registration, fewer rejected forms and less mentor time
+spent counting credits. Keeping the catalogue and rules current is an ongoing
+maintenance cost.
+
+This frontend implements the catalogue and planning grid that support that
+idea. It does not compute declaration deadlines or decide whether a degree plan
+is valid. The [full proposal](docs/hw1-proposal.md#one-page-summary) includes
+the one-page summary and complete Business Model Canvas.
 
 ## Run
 
@@ -35,17 +69,114 @@ npm test            # compile, then check CSV handling, plan operations and the 
 - Course details: title, subject, credits and description.
 - Add/remove courses in a four-year trimester table.
 - Credit totals and duplicate-course prevention.
-- An About page with the proposal, the component design and a sequence diagram.
+- Dedicated Abstract, Components and Sequence pages, plus an About page with the homework documents.
 
 Plans stay in memory and reset on reload. The interface intentionally uses
 ordinary controls and a basic table. Hints, prerequisite checks and automatic
 scheduling are outside this version.
 
+## From HW2: components and responsibilities
+
+[Homework 2](docs/hw2-components.md#3-the-components) separates catalogue
+preparation, shared data and interactive planning. Slow timetable ingestion
+belongs in a batch job; persistent data belongs in a database; immediate
+feedback belongs in the browser. The server provides the API between them.
+
+| HW2 component | Role in the design | What exists here |
+| --- | --- | --- |
+| Client | Browse courses and arrange a degree plan | Programme selectors, catalogue, trimester table and details panel |
+| API | Read catalogue data and save plans | Only `GET /api/health`; the browser fetches the CSV directly |
+| Catalogue store | Keep courses, offerings and requirements | SQLite course/subject tables and an optional CSV import |
+| Plan store | Keep named plans and placements | Schema only; the active plan stays in browser memory |
+| Ingest pipeline | Rebuild the catalogue from university sources | Future work; this version uses a CSV snapshot |
+| Deadline engine | Calculate the last feasible start and blocking course | Future work |
+| Rule engine | Explain prerequisite, offering and credit violations | Future work; only duplicate prevention and credit sums exist |
+| Identity | Sign-in, sessions and read-only sharing | Future work |
+
+The full design proposes Svelte and PostgreSQL. This course prototype uses
+vanilla TypeScript and SQLite. HW2's proposed shared rule engine and delayed
+plan saves are future work.
+
+### Frontend components used here
+
+| Module | Responsibility |
+| --- | --- |
+| [`programme.ts`](src/components/programme.ts) | Populate major/minor selectors and update the plan label |
+| [`catalogue.ts`](src/components/catalogue.ts) | Search/filter courses and handle Details and Add buttons |
+| [`board.ts`](src/components/board.ts) | Render twelve trimester cells, course placements and credit totals |
+| [`details.ts`](src/components/details.ts) | Display the selected course's information |
+| [`main.ts`](src/main.ts) | Load data, connect component callbacks and report loading/errors |
+| [`plan.ts`](src/plan.ts) | Create and update the in-memory plan, block duplicates and sum credits |
+| [`data/catalogue.ts`](src/data/catalogue.ts) and [`csv.ts`](src/lib/csv.ts) | Fetch the catalogue and parse the CSV |
+
+Components create ordinary DOM elements and call functions supplied by
+`main.ts`. The plan functions have no DOM or network dependencies, so the data
+operations can be checked independently of the page.
+
+### Technologies used
+
+| Technology | Use |
+| --- | --- |
+| HTML | Page structure, labelled forms and the trimester table |
+| TypeScript | Types, plan operations and browser event handlers; compiled to native JavaScript modules |
+| Sass / CSS | Shared colour tokens, cards, controls and responsive styling |
+| Node.js `node:http` | Local file server and API health route |
+| Node.js `node:sqlite` / SQLite | Database schema and optional catalogue import |
+| Node.js `node:test` | Frontend data and server route checks |
+
+TypeScript and Sass are the only npm build dependencies. There is no frontend
+framework, backend framework or ORM in this prototype.
+
+## Sequence: opening the planner and adding a course
+
+This diagram follows the running prototype. The student and browser are shown
+separately so local edits are distinct from HTTP requests.
+
+```mermaid
+sequenceDiagram
+    actor Student
+    participant Browser
+    participant Server
+    participant Database as SQLite
+
+    Student->>Browser: Open the planner
+    Browser->>Server: GET / and /assets/ files
+    Server-->>Browser: HTML, JavaScript and CSS
+    Browser->>Server: GET /data/courses.csv
+    Server-->>Browser: Course catalogue
+    Browser-->>Student: Show courses and an empty plan
+
+    Student->>Browser: Select a trimester and click Add
+    Browser->>Browser: addCourse checks the current plan
+    alt Course is already in the plan
+        Browser-->>Student: Show duplicate-course message
+    else Course is new to the plan
+        Browser->>Browser: Add placement and recalculate credits
+        Browser-->>Student: Update the table, totals and status
+    end
+    Note over Student,Browser: Edits stay in memory; reloading clears the plan
+
+    opt Separate API health check
+        Browser->>Server: GET /api/health
+        Server->>Database: SELECT 1
+        Database-->>Server: OK
+        Server-->>Browser: JSON status, database and stage
+    end
+```
+
+The planner does not call the health endpoint automatically. The
+[full sequence diagram](docs/sequence-diagram.md) also covers database setup
+and import, with an [SVG version](docs/sequence-diagram.svg) available on the
+About page.
+
 ## Where the code lives
 
 ```text
 index.html                Planner markup and component containers
-about.html                Static About page: proposal, components, sequence diagram
+about.html                Project overview and original documents
+abstract.html             HW1 abstract (/abstract; /asbtract alias)
+components.html           Technology stack and HW2 component map (/components)
+sequence.html             Sequence diagram and reading notes (/sequence)
 src/
   main.ts                 Startup and component event callbacks
   types.ts                Course, term and plan types
@@ -81,6 +212,11 @@ tests/
 dist/                     Generated JavaScript and CSS; do not edit
 ```
 
+The Sass takes visual cues from the original Tracey in `kreabot_main/tracey`:
+plum text, warm pink surfaces, subtle card and button highlights, and a cool
+grey planning grid. The tokens are in `src/styles/_variables.scss`, with the
+page and component styles in `src/styles/main.scss`.
+
 ## Backend: setup only
 
 ```sh
@@ -97,7 +233,7 @@ The server responds to `GET /api/health`. Course and plan REST endpoints are
 reads the CSV; it neither saves plans nor reads SQLite. The server listens on
 localhost and this setup has no accounts.
 
-The server only serves named files: `/`, `/about`, compiled JS and CSS under
+The server only serves named files: the page routes above, compiled JS and CSS under
 `/assets/`, `data/courses.csv`, and the PDFs and images under `/docs/`. The
 Markdown sources, the database and the server code are not reachable over HTTP.
 
@@ -122,4 +258,5 @@ with direct SQL and parameterised queries. There is no ORM or backend framework.
   design, with a note on which components this prototype contains. Also as
   [PDF](docs/hw2-components.pdf).
 
-All four are linked from the About page at `/about` when the server is running.
+The homework PDFs and diagram are linked from the website. The Markdown sources
+and course map can be read in the repository.
