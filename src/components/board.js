@@ -3,7 +3,7 @@ import { countCredits, terms, years } from '../plan.js';
 
 export function renderBoard(options) {
     const { plan, onRemove, onDetails } = options;
-    const rows = years.map(year => {
+    const rows = years.filter(year => options.fourYear !== false || year < 4).map(year => {
         const row = element('tr');
         const heading = element('th', 'year-label', `y${year}`);
         heading.scope = 'row';

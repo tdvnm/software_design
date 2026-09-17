@@ -19,8 +19,12 @@
         <header class="col-header brand-header"><h1><small>kreabot's</small> <a href="/">tracey</a></h1><span class="brand-mark" aria-hidden="true">✳</span></header>
         <div class="programme-controls">
           <p class="section-label">your programme</p>
+          <label class="control-row"><span>4-year</span><input id="four-year" type="checkbox" checked /></label>
+          <label class="control-row"><span>plan</span><select id="structure"><option value="single-major">single major</option><option value="double-major">double major</option><option value="major-minor">major + minor</option><option value="major-conc">major + conc.</option><option value="major-minor-conc">major + minor + conc.</option></select></label>
           <label class="control-row"><span>major</span><select id="major"><option value="">undecided</option></select></label>
           <label class="control-row"><span>minor</span><select id="minor"><option value="">none</option></select></label>
+          <label class="control-row" id="major2-row" hidden><span>major</span><select id="major2"></select></label>
+          <label class="control-row" id="concentration-row" hidden><span>conc.</span><select id="concentration"><option value="">none</option></select></label>
           <p id="programme-summary" class="muted"></p>
         </div>
         <section class="hints-section" aria-labelledby="hints-title">
