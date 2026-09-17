@@ -6,7 +6,7 @@ that build DOM elements, not a UI framework.
 
 | Course topic | Concrete use here |
 | --- | --- |
-| Files and the shell | The CSV is a source file; SQLite is a database file. `npm run db:import`, `build`, `check` and `test` are repeatable shell commands. |
+| Files and the shell | The CSV is a source file; SQLite is a database file. `npm run db:import`, `build` and `test` are repeatable shell commands. |
 | Git | Small commits record separate changes to layout, data operations and tests. |
 | Regular expressions | API route matching in `server/app.py`; input/source checks and the CSV parsing boundary. |
 | JSON | `fetch('/api/courses')` reads JSON. `storage.js` serializes plans and parses imported files, checking version, term IDs, course IDs and duplicate placements. |

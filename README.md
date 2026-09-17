@@ -8,7 +8,7 @@ There are no frontend frameworks, npm dependencies, transpilers or CSS preproces
 
 ## Run
 
-Use Node.js 22.13+ and Python 3.12+.
+Use Python 3.12+. Node.js 22.13+ is needed only to run the frontend tests.
 
 ```sh
 npm run db:import   # creates the database and imports all 474 courses
@@ -20,7 +20,6 @@ npm run dev         # copies src to dist, then serves http://127.0.0.1:3000
 CSS, rebuild and refresh. HTML edits need only a refresh.
 
 ```sh
-npm run check      # syntax-check the JavaScript
 npm test           # frontend behaviour and Python API/database tests
 npm run build
 npm start          # serve an existing build
@@ -76,7 +75,7 @@ overwritten, and a storage error is shown in the planner.
 | `src/data/` | API catalogue loader and reference metadata |
 | `src/styles/main.css` | Layout, colour variables, themes and responsive rules |
 | `server/` | HTTP routing, SQL schema and transactional CSV import |
-| `scripts/` | Copy build and syntax checks |
+| `scripts/` | Copy build |
 | `tests/` | Native Node.js and Python tests |
 
 The course-topic mapping is in [docs/course-map.md](docs/course-map.md), based on
