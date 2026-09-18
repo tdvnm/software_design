@@ -1,3 +1,4 @@
+import { loadSavedPlan, savePlan } from './storage.js';
 import { loadCourses } from './data/catalogue.js';
 import { addCourse, createPlan, removeCourse, terms } from './plan.js';
 import { getElement } from './lib/dom.js';
@@ -11,8 +12,19 @@ async function main() {
     const courses = await loadCourses();
     const byCode = new Map(courses.flatMap(c => (c.codes || [c.code]).map(code => [code, c])));
     const subjects = [...new Set(courses.flatMap(course => course.subjects))].sort();
-    const plan = createPlan();
-    const preferences = { ...defaultPreferences };
+    let saved;
+    let storageWarning = '';
+    try { saved = loadSavedPlan(courses); }
+    catch { storageWarning = 'Could not restore the saved plan. Changes will stay in this tab until you export them.'; }
+    const plan = saved?.plan || createPlan();
+    const preferences = saved?.preferences || { ...defaultPreferences };
+    // Do not overwrite a damaged save or an unavailable storage area.
+    let canSave = !storageWarning;
+    function persist() {
+        if (!canSave) return;
+        try { savePlan(plan, preferences); }
+        catch { canSave = false; storageWarning = 'Browser storage is unavailable. Export your plan before closing this tab.'; }
+    }
     let catalogue;
     let selected;
     const isPlaced = code => Object.values(plan).some(list => list.some(c => c.code === code));
@@ -25,6 +37,7 @@ async function main() {
     function refresh() {
         renderBoard({ plan, fourYear: preferences.fourYear, courseType, onDetails: select, onRemove(termId, code) {
             removeCourse(plan, termId, code);
+            persist();
             status.textContent = `removed ${code}`;
             refresh();
         } });
@@ -36,6 +49,7 @@ async function main() {
             preferences.fourYear = true;
             status.textContent = 'Move the courses in year 4 before switching to three years.';
         } else status.textContent = 'programme updated · your courses stayed in place';
+        persist();
         for (const option of getElement('term').options) option.hidden = !preferences.fourYear && option.value.startsWith('4-');
         if (!preferences.fourYear && getElement('term').value.startsWith('4-')) getElement('term').value = '3-3';
         refresh();
@@ -43,11 +57,11 @@ async function main() {
     catalogue = setupCatalogue({ courses, subjects, terms, isPlaced, courseType, onDetails: select, onAdd(course, termId) {
         const added = addCourse(plan, termId, course);
         status.textContent = added ? `added ${course.code} to ${terms.find(t => t.id === termId).label.toLowerCase()}` : `${course.code} is already in the plan`;
-        if (added) refresh();
+        if (added) { refresh(); persist(); }
     } });
     refresh();
     getElement('workspace').disabled = false;
-    status.textContent = 'choose a course and a trimester to start';
+    status.textContent = storageWarning || 'saved on this browser · choose a course to start';
 }
 main().catch(error => {
     status.textContent = `Could not load courses: ${error.message || 'Unknown error.'} Reload to retry.`;
