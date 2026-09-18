@@ -21,3 +21,12 @@ export function removeCourse(plan, termId, code) {
 export function countCredits(courses) {
     return courses.reduce((total, course) => total + course.credits, 0);
 }
+
+export function moveCourse(plan, termId, course) {
+    if (!Object.hasOwn(plan, termId)) throw new Error('Unknown term');
+    for (const list of Object.values(plan)) {
+        const index = list.findIndex(item => item.code === course.code);
+        if (index !== -1) list.splice(index, 1);
+    }
+    plan[termId].push(course);
+}

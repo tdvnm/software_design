@@ -1,6 +1,6 @@
 import { loadSavedPlan, savePlan } from './storage.js';
 import { loadCourses } from './data/catalogue.js';
-import { addCourse, createPlan, removeCourse, terms } from './plan.js';
+import { addCourse, createPlan, removeCourse, moveCourse, terms } from './plan.js';
 import { getElement } from './lib/dom.js';
 import { defaultPreferences, makeCourseType, setupProgramme } from './components/programme.js';
 import { setupCatalogue } from './components/catalogue.js';
@@ -31,11 +31,19 @@ async function main() {
     const courseType = course => makeCourseType(preferences, courses)(course);
     function select(course) {
         selected = course;
-        showDetails(course, { onSelectCode: code => select(byCode.get(code)), hasCode: code => byCode.has(code) });
+        showDetails(course, { onSelectCode: code => select(byCode.get(code)), hasCode: code => byCode.has(code), onMove: move, fourYear: preferences.fourYear, termId: Object.keys(plan).find(term => plan[term].some(c => c.code === course.code)) });
         document.querySelectorAll('[data-code]').forEach(node => node.classList.toggle('is-selected', node.dataset.code === course.code));
     }
+    function move(code, termId) {
+        const course = byCode.get(code);
+        if (!course || !Object.hasOwn(plan, termId) || (!preferences.fourYear && termId.startsWith('4-'))) return;
+        moveCourse(plan, termId, course);
+        persist();
+        refresh();
+        status.textContent = `placed ${course.code} in ${terms.find(t => t.id === termId).label.toLowerCase()}`;
+    }
     function refresh() {
-        renderBoard({ plan, fourYear: preferences.fourYear, courseType, onDetails: select, onRemove(termId, code) {
+        renderBoard({ plan, fourYear: preferences.fourYear, courseType, onDetails: select, onMove: move, onRemove(termId, code) {
             removeCourse(plan, termId, code);
             persist();
             status.textContent = `removed ${code}`;

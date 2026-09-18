@@ -135,3 +135,8 @@ body:not(.planner-page) section, .card { background: var(--paper); border: 1px s
 .detail-faculty { margin-top: 1rem; font-style: italic; }
 .detail-links { display: flex; flex-wrap: wrap; gap: .4rem; }
 .detail-links button { padding: .3rem .5rem; font-size: 11px; }
+.catalogue-card[draggable], .course-chip[draggable] { cursor: grab; }
+.is-dragging { opacity: .35; }
+.plan-table td.drop-target { outline: 2px dashed var(--accent); outline-offset: 3px; background: var(--warm); }
+.detail-placement { display: flex; flex-direction: column; gap: .4rem; font-size: 11px; margin: 1rem 0 .5rem; }
+.primary-button { width: 100%; color: var(--paper); background-color: var(--accent); font-size: 12px; }

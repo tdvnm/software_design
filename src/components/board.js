@@ -1,3 +1,4 @@
+import { makeDraggable, makeDropTarget } from '../lib/drag.js';
 import { createButton, element, getElement } from '../lib/dom.js';
 import { countCredits, terms, years } from '../plan.js';
 
@@ -11,11 +12,13 @@ export function renderBoard(options) {
         for (const term of terms.filter(term => term.year === year)) {
             const cell = element('td', 'term-cell');
             cell.dataset.term = term.id;
+            makeDropTarget(cell, code => options.onMove?.(code, term.id));
             cell.setAttribute('aria-label', term.label);
             const stack = element('div', 'term-courses');
             for (const course of plan[term.id]) {
                 const item = element('div', 'course-chip');
                 item.dataset.code = course.code;
+                makeDraggable(item, course);
                 item.dataset.type = options.courseType?.(course) || (course.subjects.includes('core') ? 'core' : 'other');
                 const details = createButton(course.code, () => onDetails(course));
                 details.className = 'chip-label';

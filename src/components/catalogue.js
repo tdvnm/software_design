@@ -1,3 +1,4 @@
+import { makeDraggable } from '../lib/drag.js';
 import { addOption, createButton, element, getElement } from '../lib/dom.js';
 
 export function setupCatalogue(options) {
@@ -17,6 +18,7 @@ export function setupCatalogue(options) {
             const row = element('li', 'catalogue-card');
             const placed = options.isPlaced?.(course.code) ?? false;
             row.dataset.code = course.code;
+            makeDraggable(row, course);
             row.dataset.type = options.courseType?.(course) || (course.subjects.includes('core') ? 'core' : 'other');
             row.classList.toggle('is-placed', placed);
             const info = createButton('', () => options.onDetails(course));

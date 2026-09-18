@@ -1,3 +1,4 @@
+import { terms } from '../plan.js';
 import { createButton, element, getElement } from '../lib/dom.js';
 
 export function showDetails(course, options = {}) {
@@ -12,6 +13,16 @@ export function showDetails(course, options = {}) {
     }
     const body = getElement('details');
     body.replaceChildren(header, stats, element('p', 'detail-subjects muted', course.subjects.join(' · ')));
+    if (options.onMove) {
+        const label = element('label', 'detail-placement', 'place in trimester');
+        const term = element('select');
+        for (const t of terms.filter(t => options.fourYear !== false || t.year < 4)) term.add(new Option(t.label, t.id));
+        term.value = options.termId || getElement('term').value;
+        label.append(term);
+        const place = createButton(options.termId ? 'move course' : 'add to plan', () => options.onMove(course.code, term.value));
+        place.className = 'primary-button';
+        body.append(label, place);
+    }
     if (course.description && course.description !== '-') {
         body.append(element('h4', 'section-label', 'about'), element('p', 'detail-description', course.description));
     }
