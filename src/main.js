@@ -1,3 +1,4 @@
+import { renderZoom } from './components/zoom.js';
 import { loadSavedPlan, savePlan } from './storage.js';
 import { loadCourses } from './data/catalogue.js';
 import { addCourse, createPlan, removeCourse, moveCourse, terms } from './plan.js';
@@ -27,6 +28,7 @@ async function main() {
     }
     let catalogue;
     let selected;
+    let zoom = null;
     const isPlaced = code => Object.values(plan).some(list => list.some(c => c.code === code));
     const courseType = course => makeCourseType(preferences, courses)(course);
     function select(course) {
@@ -43,12 +45,12 @@ async function main() {
         status.textContent = `placed ${course.code} in ${terms.find(t => t.id === termId).label.toLowerCase()}`;
     }
     function refresh() {
-        renderBoard({ plan, fourYear: preferences.fourYear, courseType, onDetails: select, onMove: move, onRemove(termId, code) {
-            removeCourse(plan, termId, code);
-            persist();
-            status.textContent = `removed ${code}`;
-            refresh();
-        } });
+        const boardOptions = { plan, fourYear: preferences.fourYear, courseType, onDetails: select, onMove: move,
+            onZoom(termId) { zoom = termId; getElement('term').value = termId; refresh(); getElement('zoom').querySelector('button').focus(); },
+            onRemove(termId, code) { removeCourse(plan, termId, code); persist(); status.textContent = `removed ${code}`; refresh(); }
+        };
+        renderBoard(boardOptions);
+        renderZoom({ ...boardOptions, termId: zoom, onClose() { const previous = zoom; zoom = null; refresh(); document.querySelector(`[data-term="${previous}"] .zoom-button`)?.focus(); } });
         catalogue?.render();
         if (selected) select(selected);
     }
@@ -59,6 +61,7 @@ async function main() {
         } else status.textContent = 'programme updated · your courses stayed in place';
         persist();
         for (const option of getElement('term').options) option.hidden = !preferences.fourYear && option.value.startsWith('4-');
+        if (!preferences.fourYear && zoom?.startsWith('4-')) zoom = null;
         if (!preferences.fourYear && getElement('term').value.startsWith('4-')) getElement('term').value = '3-3';
         refresh();
     });

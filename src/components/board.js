@@ -32,6 +32,10 @@ export function renderBoard(options) {
             const credits = countCredits(plan[term.id]);
             const summary = element('div', 'term-summary');
             summary.append(element('span', '', `${credits} cr`));
+            const open = createButton('↗', () => options.onZoom?.(term.id));
+            open.className = 'zoom-button';
+            open.setAttribute('aria-label', `Open ${term.label}`);
+            summary.append(open);
             if (!credits) stack.append(element('span', 'term-placeholder', 'add a course'));
             cell.append(stack, summary);
             row.append(cell);
