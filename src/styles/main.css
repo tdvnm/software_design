@@ -156,3 +156,16 @@ body:not(.planner-page) section, .card { background: var(--paper); border: 1px s
 .zoom-note { font-size: 11px; margin-top: 1rem; }
 .zoom-empty { grid-column: 1 / -1; font-size: 12px; text-align: center; padding-top: 3rem; }
 .drop-target { outline: 2px dashed var(--accent); outline-offset: 2px; }
+.plan-stats { display: grid; grid-template-columns: 1fr 1fr; gap: .6rem; margin: .1rem 0 1.3rem; }
+.plan-stats > div { display: flex; flex-direction: column; gap: .2rem; }
+.plan-stats strong { font-size: 26px; font-weight: 500; }
+.plan-stats span { color: var(--muted); font-size: 10px; }
+.programme-progress { display: flex; flex-direction: column; gap: .25rem; margin-bottom: 1rem; }
+.programme-progress small { font-size: 10px; }
+progress { width: 100%; height: 5px; margin: .25rem 0; accent-color: var(--accent); border: 0; }
+progress::-webkit-progress-bar { background: var(--line); border-radius: 10px; }
+progress::-webkit-progress-value { background: var(--accent); border-radius: 10px; }
+.hint { padding: .65rem .7rem; margin: .6rem 0; background: var(--other); border: 1px solid var(--line); border-radius: 4px; font-size: 11px; line-height: 1.45; }
+.hint-warn { background: var(--warn); border-color: #c08585; }
+.hint-caution { background: var(--caution); border-color: #ceac62; }
+.hint-footnote { font-size: 10px; margin-top: 1rem; }

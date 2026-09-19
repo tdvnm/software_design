@@ -1,3 +1,4 @@
+import { renderHints } from './components/hints.js';
 import { renderZoom } from './components/zoom.js';
 import { loadSavedPlan, savePlan } from './storage.js';
 import { loadCourses } from './data/catalogue.js';
@@ -30,7 +31,8 @@ async function main() {
     let selected;
     let zoom = null;
     const isPlaced = code => Object.values(plan).some(list => list.some(c => c.code === code));
-    const courseType = course => makeCourseType(preferences, courses)(course);
+    let classify = makeCourseType(preferences, courses);
+    const courseType = course => classify(course);
     function select(course) {
         selected = course;
         showDetails(course, { onSelectCode: code => select(byCode.get(code)), hasCode: code => byCode.has(code), onMove: move, fourYear: preferences.fourYear, termId: Object.keys(plan).find(term => plan[term].some(c => c.code === course.code)) });
@@ -45,6 +47,8 @@ async function main() {
         status.textContent = `placed ${course.code} in ${terms.find(t => t.id === termId).label.toLowerCase()}`;
     }
     function refresh() {
+        classify = makeCourseType(preferences, courses);
+        renderHints(plan, courses, preferences);
         const boardOptions = { plan, fourYear: preferences.fourYear, courseType, onDetails: select, onMove: move,
             onZoom(termId) { zoom = termId; getElement('term').value = termId; refresh(); getElement('zoom').querySelector('button').focus(); },
             onRemove(termId, code) { removeCourse(plan, termId, code); persist(); status.textContent = `removed ${code}`; refresh(); }
