@@ -47,7 +47,8 @@
       </section>
       <section class="plan-section" aria-labelledby="plan-title">
         <header class="col-header board-heading"><h2 id="plan-title" tabindex="-1">your plan</h2><p id="total"></p></header>
-        <div class="board-toolbar"><span class="muted">a little room for what's next</span></div>
+        <div class="board-toolbar"><span class="muted">a little room for what's next</span><div class="plan-actions"><button id="undo" disabled>undo</button><button id="export-plan">export</button><button id="import-plan">import</button><button id="clear-plan">clear</button><input id="import-file" type="file" accept=".json,application/json" hidden /></div></div>
+        <p id="save-warning" class="save-warning" role="status" hidden></p>
         <div class="board-content">
           <p id="plan-empty" class="empty-note">Your plan starts here. Pick a course on the left, then add it to a trimester.</p>
           <div id="zoom" hidden></div>

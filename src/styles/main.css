@@ -169,3 +169,6 @@ progress::-webkit-progress-value { background: var(--accent); border-radius: 10p
 .hint-warn { background: var(--warn); border-color: #c08585; }
 .hint-caution { background: var(--caution); border-color: #ceac62; }
 .hint-footnote { font-size: 10px; margin-top: 1rem; }
+.plan-actions { display: flex; gap: .35rem; }
+.plan-actions button { font-size: 10px; padding: .3rem .55rem; }
+.save-warning { margin: 1rem 1.3rem 0; padding: .7rem; font-size: 12px; background: var(--caution); border: 1px solid var(--border); border-radius: 4px; }
