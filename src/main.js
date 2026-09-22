@@ -2,7 +2,7 @@ import { renderHints } from './components/hints.js';
 import { renderZoom } from './components/zoom.js';
 import { loadSavedPlan, savePlan, serializePlan, restorePlan } from './storage.js';
 import { loadCourses } from './data/catalogue.js';
-import { addCourse, createPlan, removeCourse, moveCourse, terms } from './plan.js';
+import { addCourse, createPlan, removeCourse, moveCourse, foundationPlan, terms } from './plan.js';
 import { getElement } from './lib/dom.js';
 import { defaultPreferences, makeCourseType, setupProgramme } from './components/programme.js';
 import { setupCatalogue } from './components/catalogue.js';
@@ -61,10 +61,12 @@ async function main() {
         status.textContent = `placed ${course.code} in ${terms.find(t => t.id === termId).label.toLowerCase()}`;
     }
     function refresh() {
+        getElement('show-codes').checked = preferences.showCodes !== false;
+        getElement('show-titles').checked = preferences.showTitles === true;
         getElement('undo').disabled = history.length === 0;
         classify = makeCourseType(preferences, courses);
         renderHints(plan, courses, preferences);
-        const boardOptions = { plan, fourYear: preferences.fourYear, courseType, onDetails: select, onMove: move,
+        const boardOptions = { plan, showCodes: preferences.showCodes !== false, showTitles: preferences.showTitles === true, fourYear: preferences.fourYear, courseType, onDetails: select, onMove: move,
             onZoom(termId) { zoom = termId; getElement('term').value = termId; refresh(); getElement('zoom').querySelector('button').focus(); },
             onRemove(termId, code) { checkpoint(); removeCourse(plan, termId, code); persist(); status.textContent = `removed ${code}`; refresh(); }
         };
@@ -84,12 +86,24 @@ async function main() {
         if (!preferences.fourYear && getElement('term').value.startsWith('4-')) getElement('term').value = '3-3';
         refresh();
     });
-    catalogue = setupCatalogue({ courses, subjects, terms, isPlaced, courseType, onDetails: select, onAdd(course, termId) {
+    catalogue = setupCatalogue({ courses, subjects, terms, getPreferences: () => preferences, isPlaced, courseType, onDetails: select, onAdd(course, termId) {
         if (!isPlaced(course.code)) checkpoint();
         const added = addCourse(plan, termId, course);
         status.textContent = added ? `added ${course.code} to ${terms.find(t => t.id === termId).label.toLowerCase()}` : `${course.code} is already in the plan`;
         if (added) { refresh(); persist(); }
     } });
+    for (const [id, key] of [['show-codes', 'showCodes'], ['show-titles', 'showTitles']]) {
+        getElement(id).addEventListener('change', event => {
+            preferences[key] = event.target.checked;
+            if (preferences.showCodes === false && preferences.showTitles !== true) preferences[key === 'showCodes' ? 'showTitles' : 'showCodes'] = true;
+            persist(); refresh();
+        });
+    }
+    getElement('foundation-plan').addEventListener('click', () => {
+        if (Object.values(plan).some(list => list.length) && !confirm('Replace the current plan with foundation core courses? You can undo this.')) return;
+        checkpoint(); Object.assign(plan, foundationPlan(courses));
+        persist(); refresh(); status.textContent = 'foundation core placed · add your programme courses next';
+    });
     getElement('undo').addEventListener('click', () => {
         if (!history.length) return;
         apply(restorePlan(JSON.parse(history.pop()), courses));

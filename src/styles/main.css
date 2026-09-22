@@ -172,3 +172,16 @@ progress::-webkit-progress-value { background: var(--accent); border-radius: 10p
 .plan-actions { display: flex; gap: .35rem; }
 .plan-actions button { font-size: 10px; padding: .3rem .55rem; }
 .save-warning { margin: 1rem 1.3rem 0; padding: .7rem; font-size: 12px; background: var(--caution); border: 1px solid var(--border); border-radius: 4px; }
+.foundation-button { display: block; width: 100%; font-size: 10px; margin-top: 1rem; text-align: left; }
+.label-toggles { display: flex; align-items: center; gap: .7rem; }
+.label-toggles label { display: flex; gap: .2rem; align-items: center; }
+.label-toggles input { margin: 0; }
+.board-legend { display: flex; gap: .9rem; flex-wrap: wrap; padding: .75rem 1.4rem 0; color: var(--board-text); font-size: 10px; }
+.board-legend > span { display: flex; gap: .35rem; align-items: center; }
+.board-legend i { width: 9px; height: 9px; border: 1px solid var(--line); border-radius: 2px; background: var(--card); }
+.board-legend i[data-type=core] { background: var(--core); }
+.board-legend i[data-type=elective] { background: var(--elective); }
+.board-legend i[data-type=other] { background: var(--other); }
+.quick-filters { display: flex; gap: .4rem; margin-bottom: .8rem; }
+.quick-filters button { font-size: 11px; padding: .25rem .6rem; }
+.quick-filters button[aria-pressed=true] { color: var(--paper); background-color: var(--accent); }

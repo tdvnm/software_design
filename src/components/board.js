@@ -20,7 +20,8 @@ export function renderBoard(options) {
                 item.dataset.code = course.code;
                 makeDraggable(item, course);
                 item.dataset.type = options.courseType?.(course) || (course.subjects.includes('core') ? 'core' : 'other');
-                const details = createButton(course.code, () => onDetails(course));
+                const label = [options.showCodes !== false ? course.code : '', options.showTitles ? course.title : ''].filter(Boolean).join(' · ');
+                const details = createButton(label, () => onDetails(course));
                 details.className = 'chip-label';
                 details.title = course.title;
                 const remove = createButton('×', () => onRemove(term.id, course.code));

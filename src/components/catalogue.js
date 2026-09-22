@@ -8,7 +8,19 @@ export function setupCatalogue(options) {
     options.subjects.forEach(value => addOption(subject, value));
     options.terms.forEach(value => addOption(term, value.id, value.label));
     const list = getElement('catalogue');
+    subject.value = options.getPreferences?.().major || ''; 
     function render() {
+        const filterHost = getElement('quick-filters');
+        const focusSubject = filterHost.contains(document.activeElement) ? document.activeElement.dataset.subject : undefined;
+        const major = options.getPreferences?.().major;
+        const quick = [['', 'all'], ...(major ? [[major, major === 'computer science' ? 'comp' : major.split(' ')[0]]] : []), ['core', 'kccs']];
+        filterHost.replaceChildren(...quick.map(([value, label]) => {
+            const button = createButton(label, () => { subject.value = value; render(); });
+            button.dataset.subject = value;
+            button.setAttribute('aria-pressed', String(subject.value === value));
+            return button;
+        }));
+        if (focusSubject !== undefined) [...filterHost.children].find(node => node.dataset.subject === focusSubject)?.focus();
         const query = search.value.trim().toLowerCase();
         const matches = options.courses.filter(course =>
             (!subject.value || course.subjects.includes(subject.value)) &&
