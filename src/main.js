@@ -61,6 +61,10 @@ async function main() {
         status.textContent = `placed ${course.code} in ${terms.find(t => t.id === termId).label.toLowerCase()}`;
     }
     function refresh() {
+        document.documentElement.dataset.theme = preferences.theme || 'light';
+        getElement('theme-toggle').setAttribute('aria-pressed', String(preferences.theme === 'dark'));
+        getElement('theme-toggle').setAttribute('aria-label', preferences.theme === 'dark' ? 'Use light theme' : 'Use dark theme');
+        getElement('theme-toggle').textContent = preferences.theme === 'dark' ? '☀' : '☾';
         getElement('show-codes').checked = preferences.showCodes !== false;
         getElement('show-titles').checked = preferences.showTitles === true;
         getElement('undo').disabled = history.length === 0;
@@ -103,6 +107,10 @@ async function main() {
         if (Object.values(plan).some(list => list.length) && !confirm('Replace the current plan with foundation core courses? You can undo this.')) return;
         checkpoint(); Object.assign(plan, foundationPlan(courses));
         persist(); refresh(); status.textContent = 'foundation core placed · add your programme courses next';
+    });
+    getElement('theme-toggle').addEventListener('click', () => {
+        preferences.theme = preferences.theme === 'dark' ? 'light' : 'dark';
+        persist(); refresh();
     });
     getElement('undo').addEventListener('click', () => {
         if (!history.length) return;

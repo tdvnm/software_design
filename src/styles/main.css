@@ -185,3 +185,19 @@ progress::-webkit-progress-value { background: var(--accent); border-radius: 10p
 .quick-filters { display: flex; gap: .4rem; margin-bottom: .8rem; }
 .quick-filters button { font-size: 11px; padding: .25rem .6rem; }
 .quick-filters button[aria-pressed=true] { color: var(--paper); background-color: var(--accent); }
+:root[data-theme=dark] {
+  color-scheme: dark;
+  --text: #f1e3e7; --muted: #c0a7b0; --accent: #a76b90; --border: #7b5665;
+  --line: #59434d; --bg: #201a1e; --paper: #2e2429; --card: #342930;
+  --rail: #271e23; --rail-end: #221a1e; --warm: #2a2126;
+  --head: #34272c; --head-end: #281e23;
+  --board: #21242b; --cell: #2b2f37; --board-line: #434854; --board-text: #b2baca;
+  --core: #4e333a; --elective: #343a55; --other: #372c32;
+  --warn: #4a2b2f; --caution: #453923; --good: #2a4038;
+  --shadow: 0 1px 2px #0006, 0 3px 8px #0004;
+  --shine: inset 0 1px 0 #ffffff18; --well: inset 0 2px 4px #0005;
+}
+.theme-toggle { font-size: 19px; border: 0; background: none; box-shadow: none; padding: .2rem; line-height: 1; }
+:root[data-theme=dark] button { background-image: linear-gradient(#ffffff10, #00000010); }
+:root[data-theme=dark] .theme-toggle, :root[data-theme=dark] .course-info { background-image: none; }
+:root[data-theme=dark] .primary-button, :root[data-theme=dark] .quick-filters button[aria-pressed=true] { color: #fff8f8; }
