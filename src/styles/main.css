@@ -201,3 +201,54 @@ progress::-webkit-progress-value { background: var(--accent); border-radius: 10p
 :root[data-theme=dark] button { background-image: linear-gradient(#ffffff10, #00000010); }
 :root[data-theme=dark] .theme-toggle, :root[data-theme=dark] .course-info { background-image: none; }
 :root[data-theme=dark] .primary-button, :root[data-theme=dark] .quick-filters button[aria-pressed=true] { color: #fff8f8; }
+/* Keep every region reachable on a smaller screen, including course details. */
+@media (min-width: 1051px) {
+  .programme-panel, .details-panel { overscroll-behavior: contain; }
+  #catalogue { overscroll-behavior: contain; }
+}
+@media (min-width: 761px) and (max-width: 1050px) {
+  #workspace { height: auto; min-height: 100dvh; grid-template-columns: 185px 230px minmax(0, 1fr); grid-template-rows: minmax(680px, 85dvh) auto; }
+  #details { max-width: 760px; }
+  .details-empty { margin: 1rem; }
+  .details-empty > span { display: none; }
+  .plan-table { min-width: 370px; border-spacing: .35rem; }
+  .board-content { padding: 1rem .65rem; }
+}
+@media (max-width: 760px) {
+  .col-header { min-height: 56px; }
+  .programme-controls { display: grid; grid-template-columns: 1fr 1fr; gap: 0 1rem; }
+  .programme-controls > .section-label, #programme-summary, .foundation-button { grid-column: 1 / -1; }
+  .control-row { grid-template-columns: 40px minmax(0, 1fr); }
+  .hints-section .hints-body { max-height: 235px; overflow-y: auto; }
+  .plan-stats { grid-template-columns: 1fr 1fr; }
+  .programme-panel, .catalogue-panel { border-right: 0; }
+  #status { margin-top: .5rem; }
+  .catalogue-controls { padding-bottom: .6rem; }
+  #catalogue { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); align-content: start; gap: .6rem; max-height: 350px; }
+  #catalogue li.catalogue-card { margin: 0; }
+  .board-content { padding: 1rem .5rem; }
+  .board-toolbar { padding: .8rem; }
+  .board-heading { padding-inline: .9rem; }
+  .plan-table td { height: 140px; }
+  .details-panel { border-left: 0; }
+  .detail-stats { max-width: 450px; }
+  .detail-description { max-width: 75ch; }
+  .detail-placement { max-width: 350px; }
+  .primary-button { max-width: 350px; }
+  #details { padding: 1rem; }
+  .zoom-grid { min-height: 340px; }
+  .zoom-heading { gap: .65rem; }
+  .zoom-heading h3 { font-size: 15px; }
+  .site-footer-inner { flex-direction: column; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  button { transition: border-color .12s ease, background-color .12s ease; }
+  .course-chip { animation: course-in .15s ease-out; }
+  @keyframes course-in { from { opacity: .6; transform: translateY(3px); } to { opacity: 1; transform: translateY(0); } }
+}
+@media print {
+  .programme-panel, .catalogue-panel, .details-panel, .board-toolbar, .board-footnote, .skip-link, .chip-remove, .zoom-button { display: none !important; }
+  #workspace { display: block; height: auto; }
+  .plan-section { overflow: visible; }
+  .plan-table { break-inside: avoid; }
+}
