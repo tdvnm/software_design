@@ -116,3 +116,15 @@ test('a heavy trimester reports its credit load', () => {
   assert.ok(getHints(plan, [], defaultPreferences).some(h => h.text.includes('24 credits is above')));
   assert.ok(programmeProgress(plan, catalogue, defaultPreferences).every(p => p.done <= p.needed));
 });
+
+import { makeCourseType, requirementsFor } from '../dist/components/programme.js';
+test('programme colours and progress use COMP codes from the current requirements snapshot', () => {
+  const requirements = requirementsFor(defaultPreferences)[0].required;
+  assert.ok(requirements.includes('COMP350'));
+  assert.ok(!requirements.some(code => code.startsWith('CS ')));
+  const course = catalogue.find(c => c.code === 'COMP350');
+  assert.equal(makeCourseType(defaultPreferences, catalogue)(course), 'required');
+  const plan = createPlan();
+  addCourse(plan, '3-1', course);
+  assert.equal(programmeProgress(plan, catalogue, defaultPreferences)[0].done, 1);
+});
