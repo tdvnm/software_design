@@ -10,6 +10,7 @@ import { renderBoard } from './components/board.js';
 import { showDetails } from './components/details.js';
 
 const status = getElement('status');
+getElement('help-open').addEventListener('click', () => getElement('help-dialog').showModal());
 async function main() {
     const courses = await loadCourses();
     const byCode = new Map(courses.flatMap(c => (c.codes || [c.code]).map(code => [code, c])));

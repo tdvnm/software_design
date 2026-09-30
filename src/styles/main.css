@@ -252,3 +252,12 @@ progress::-webkit-progress-value { background: var(--accent); border-radius: 10p
   .plan-section { overflow: visible; }
   .plan-table { break-inside: avoid; }
 }
+.help-link { align-self: flex-start; margin: .8rem 1rem -.3rem; border: 0; background: none; box-shadow: none; padding: .2rem 0; font-size: 11px; color: var(--accent); }
+#help-dialog { width: min(540px, calc(100vw - 2rem)); max-height: calc(100dvh - 2rem); overflow: auto; border: 1px solid var(--border); border-radius: 10px; padding: 2rem; color: var(--text); background: var(--rail); box-shadow: 0 15px 70px #39212e44; }
+#help-dialog::backdrop { background: #30232b66; }
+#help-dialog h2 { font-size: 25px; font-weight: 500; }
+.help-close { position: absolute; top: .7rem; right: .7rem; border: 0; background: none; box-shadow: none; font-size: 20px; padding: .2rem .5rem; }
+.help-steps { padding-left: 1.25rem; margin: 1.5rem 0; font-size: 13px; }
+.help-steps li { padding-left: .4rem; margin-bottom: 1rem; }
+.help-steps strong { display: block; margin-bottom: .2rem; }
+#help-dialog > p.muted { font-size: 11px; margin-bottom: 1.5rem; }

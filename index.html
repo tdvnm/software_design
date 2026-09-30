@@ -17,6 +17,7 @@
       <legend class="sr-only">Degree planner</legend>
       <aside class="programme-panel" aria-label="Your programme">
         <header class="col-header brand-header"><h1><small>kreabot's</small> <a href="/">tracey</a></h1><button id="theme-toggle" class="theme-toggle" aria-label="Use dark theme" aria-pressed="false">☾</button></header>
+        <button id="help-open" class="help-link">ⓘ &nbsp; a quick tour</button>
         <div class="programme-controls">
           <p class="section-label">your programme</p>
           <label class="control-row"><span>4-year</span><input id="four-year" type="checkbox" checked /></label>
@@ -66,6 +67,18 @@
       </aside>
     </fieldset>
   </main>
+  <dialog id="help-dialog" aria-labelledby="help-title">
+    <form method="dialog"><button class="help-close" aria-label="Close help" autofocus>×</button></form>
+    <p class="section-label">a little help getting started</p><h2 id="help-title">make room for your degree.</h2>
+    <ol class="help-steps">
+      <li><strong>Pick your programme.</strong> Choose a major, a minor or a second major. Start with the foundation core if you want a first draft.</li>
+      <li><strong>Find your courses.</strong> Search the catalogue or filter by subject. Click a course to read its description and prerequisites.</li>
+      <li><strong>Lay out your years.</strong> Drag cards into the grid, or choose a trimester and press add. Use ↗ to focus on one trimester. The course panel also has a move button.</li>
+      <li><strong>Keep a copy.</strong> Your plan saves in this browser. Export a file to keep a backup or open it elsewhere. Undo brings back the last plan edit.</li>
+    </ol>
+    <p class="muted">Hints use a timetable and programme snapshot. Check current offerings and requirements with your mentor.</p>
+    <form method="dialog"><button class="primary-button">let's plan</button></form>
+  </dialog>
   <noscript><p class="empty-note">Enable JavaScript to use the planner. You can still read the <a href="/about">project pages</a>.</p></noscript>
 </body>
 </html>
