@@ -24,15 +24,15 @@
             <thead><tr><th scope="col">Technology</th><th scope="col">What we use it for</th></tr></thead>
             <tbody>
               <tr><th scope="row">HTML</th><td>Page structure, labelled forms and the trimester table.</td></tr>
-              <tr><th scope="row">TypeScript</th><td>Course and plan types, browser events and data operations. Compiled to native JavaScript modules.</td></tr>
-              <tr><th scope="row">Sass / CSS</th><td>Shared colour and spacing variables, cards, controls and responsive layouts.</td></tr>
+              <tr><th scope="row">JavaScript</th><td>Native browser modules, DOM events and plan operations. No compiler or bundler.</td></tr>
+              <tr><th scope="row">CSS</th><td>Shared colour and spacing variables, cards, controls and responsive layouts.</td></tr>
               <tr><th scope="row">Python</th><td>The standard-library <code>http.server</code> module serves pages, assets and the course/plan API. No web framework.</td></tr>
-              <tr><th scope="row">SQLite3</th><td>Python's built-in <code>sqlite3</code> module creates the tables, imports the course CSV and answers the API's queries. The planner page does not read from it yet.</td></tr>
+              <tr><th scope="row">SQLite3</th><td>Python's built-in <code>sqlite3</code> module creates the tables, imports the course CSV and answers the API's queries. The planner reads courses through <code>GET /api/courses</code>.</td></tr>
               <tr><th scope="row">Tests</th><td><code>node:test</code> checks CSV parsing and plan operations in the browser code; <code>unittest</code> checks the server's routes and API.</td></tr>
             </tbody>
           </table>
         </div>
-        <p>TypeScript and Sass are the only npm build dependencies, and the server needs nothing
+        <p>There are no npm dependencies, and the server needs nothing
           beyond Python's standard library. The prototype has no frontend framework, backend
           framework or ORM.</p>
       </section>
@@ -42,18 +42,18 @@
           <table>
             <thead><tr><th scope="col">Module</th><th scope="col">Responsibility</th></tr></thead>
             <tbody>
-              <tr><th scope="row"><code>components/programme.ts</code></th><td>Major/minor selectors and the plan label.</td></tr>
-              <tr><th scope="row"><code>components/catalogue.ts</code></th><td>Course search, subject filters, Details and Add buttons.</td></tr>
-              <tr><th scope="row"><code>components/board.ts</code></th><td>The four-year trimester table, placements, removal and credit totals.</td></tr>
-              <tr><th scope="row"><code>components/details.ts</code></th><td>The selected course's title, subjects, credits and description.</td></tr>
-              <tr><th scope="row"><code>main.ts</code></th><td>Startup, loading/error messages and callbacks that connect the components.</td></tr>
-              <tr><th scope="row"><code>plan.ts</code></th><td>In-memory plan operations, duplicate prevention and credit sums, independent of the DOM.</td></tr>
-              <tr><th scope="row"><code>data/catalogue.ts</code> and <code>lib/csv.ts</code></th><td>Download the course snapshot and parse CSV fields.</td></tr>
+              <tr><th scope="row"><code>components/programme.js</code></th><td>Major/minor selectors and the plan label.</td></tr>
+              <tr><th scope="row"><code>components/catalogue.js</code></th><td>Course search, subject filters, Details and Add buttons.</td></tr>
+              <tr><th scope="row"><code>components/board.js</code></th><td>The four-year trimester table, placements, removal and credit totals.</td></tr>
+              <tr><th scope="row"><code>components/details.js</code></th><td>The selected course's title, subjects, credits and description.</td></tr>
+              <tr><th scope="row"><code>main.js</code></th><td>Startup, loading/error messages and callbacks that connect the components.</td></tr>
+              <tr><th scope="row"><code>plan.js</code></th><td>In-memory plan operations, duplicate prevention and credit sums, independent of the DOM.</td></tr>
+              <tr><th scope="row"><code>data/catalogue.js</code> and <code>lib/csv.js</code></th><td>Fetch course JSON from the API; parse the CSV in data tests.</td></tr>
             </tbody>
           </table>
         </div>
-        <p>When a student presses Add, the catalogue calls a callback in <code>main.ts</code>.
-          That calls <code>addCourse</code> in <code>plan.ts</code>, then redraws the board and totals.
+        <p>When a student presses Add, the catalogue calls a callback in <code>main.js</code>.
+          That calls <code>addCourse</code> in <code>plan.js</code>, then redraws the board and totals.
           No server request is made for that edit.</p>
       </section>
       <section aria-labelledby="components-title">
@@ -77,13 +77,13 @@
                 <th scope="row">Client</th>
                 <td>Subject pickers, a course catalogue, a year × trimester grid, a details panel.</td>
                 <td>Browser</td>
-                <td>Yes, simplified. Ordinary buttons and selects instead of drag-and-drop.</td>
+                <td>Yes: buttons, selectors, drag-and-drop, course details and trimester zoom.</td>
               </tr>
               <tr>
                 <th scope="row">API</th>
                 <td>The contract between browser and server: catalogue read, plan create/read/update/delete.</td>
                 <td>Server</td>
-                <td><code>GET /api/health</code> only. Plan routes are documented, not built.</td>
+                <td>Catalogue, health and plan CRUD routes are implemented. The UI calls the catalogue route.</td>
               </tr>
               <tr>
                 <th scope="row">Catalogue store</th>
@@ -95,7 +95,7 @@
                 <th scope="row">Plan store</th>
                 <td>One student, several named plans, each a set of (course, year, trimester) placements.</td>
                 <td>Database</td>
-                <td>Tables exist; nothing writes to them yet.</td>
+                <td>Plan API writes these tables. The current UI saves its active plan in localStorage.</td>
               </tr>
               <tr>
                 <th scope="row">Ingest pipeline</th>
@@ -112,8 +112,8 @@
               <tr>
                 <th scope="row">Rule engine</th>
                 <td>Credit floors and caps, prerequisite order, offering trimester, eligibility, in plain words.</td>
-                <td>Shared</td>
-                <td>Not started.</td>
+                <td>Browser</td>
+                <td>Advisory load, prerequisite, eligibility and historical-offering checks; full degree validation is future work.</td>
               </tr>
               <tr>
                 <th scope="row">Identity</th>
@@ -125,8 +125,8 @@
           </table>
         </div>
       </section>
-      <p>HW2 proposed Svelte and PostgreSQL. This prototype uses vanilla TypeScript and SQLite.
-        The ingest pipeline, deadline engine, shared rule engine and identity component are future work.</p>
+      <p>HW2 proposed Svelte and PostgreSQL. This prototype uses plain JavaScript and SQLite.
+        Live ingestion, declaration deadlines, complete degree validation and identity are future work.</p>
       <p>Read <a href="/docs/hw2-components.pdf">Homework 2 (PDF)</a> for the complete design and its tradeoffs,
         or follow the <a href="/sequence">sequence diagram</a> for what runs today.</p>
     </main>

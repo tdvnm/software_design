@@ -67,34 +67,32 @@
         <h2 id="prototype-title">What this prototype does</h2>
         <p>
           The <a href="/">planner</a> is the first small slice of that idea, built with plain HTML,
-          TypeScript and Sass, native browser modules, and a Python server on SQLite3.
+          JavaScript and CSS, native browser modules, and a Python server on SQLite3.
         </p>
         <ul>
-          <li>Major and minor selectors that label the plan. Programme requirements are not checked.</li>
+          <li>Programme selectors, fixed-course progress and advisory planning hints.</li>
           <li>A catalogue of the 474 real courses, searchable by code or title and filterable by subject.</li>
           <li>Course details: code, title, subjects, credits and description.</li>
           <li>A year-by-trimester table: pick a trimester, add a course, remove it again.</li>
           <li>Credit totals per trimester and overall, and no course can be added twice.</li>
         </ul>
         <p>
-          The plan lives in the browser and resets on reload. Prerequisite checks, the declaration
-          deadline, hints, saved plans and sign-in are deliberately not built yet.
+          The plan saves in this browser and can be exported or imported as JSON. Prerequisite and
+          credit hints use a snapshot. Declaration deadlines, full degree audits and sign-in are future work.
         </p>
       </section>
 
       <section aria-labelledby="sequence-title">
         <h2 id="sequence-title">How it works</h2>
         <p>
-          Four participants: the <strong>Admin</strong> who sets the database up, the
-          <strong>User</strong> planning in the browser, the <strong>Server</strong> and the
-          <strong>Database</strong>. Solid arrows are requests, dashed arrows are replies.
+          Four participants: the <strong>Student</strong>, the <strong>Browser</strong>, the <strong>Server</strong> and
+          the <strong>Database</strong>. The browser handles plan edits and local saving.
         </p>
         <figure>
-          <img src="/docs/sequence-diagram.svg" alt="Sequence diagram: the admin initialises and imports the database; the user loads the page and the course CSV, then searches, filters, adds and removes courses in the browser without further requests; the health check queries SQLite; plan routes are marked as future work." width="1065" height="1989" />
+          <img src="/docs/sequence-diagram.svg" alt="Sequence diagram: the browser fetches course JSON from SQLite through the server, then updates and saves plan edits locally." width="1000" height="840" />
           <figcaption>
             Setup runs once from the command line. Planning needs the server only for the page and
-            the course CSV; every edit after that stays in the browser. The plan routes at the bottom
-            are documented but not implemented.
+            course JSON from SQLite. Plan edits save to localStorage; server plan routes exist separately.
           </figcaption>
         </figure>
       </section>
@@ -120,13 +118,13 @@
                 <th scope="row">Client</th>
                 <td>Subject pickers, a course catalogue, a year × trimester grid, a details panel.</td>
                 <td>Browser</td>
-                <td>Yes, simplified. Ordinary buttons and selects instead of drag-and-drop.</td>
+                <td>Yes: buttons, selectors, drag-and-drop, course details and trimester zoom.</td>
               </tr>
               <tr>
                 <th scope="row">API</th>
                 <td>The contract between browser and server: catalogue read, plan create/read/update/delete.</td>
                 <td>Server</td>
-                <td><code>GET /api/health</code> only. Plan routes are documented, not built.</td>
+                <td>Catalogue, health and plan CRUD routes are implemented. The UI calls the catalogue route.</td>
               </tr>
               <tr>
                 <th scope="row">Catalogue store</th>
@@ -138,7 +136,7 @@
                 <th scope="row">Plan store</th>
                 <td>One student, several named plans, each a set of (course, year, trimester) placements.</td>
                 <td>Database</td>
-                <td>Tables exist; nothing writes to them yet.</td>
+                <td>Plan API writes these tables. The current UI saves its active plan in localStorage.</td>
               </tr>
               <tr>
                 <th scope="row">Ingest pipeline</th>
@@ -155,8 +153,8 @@
               <tr>
                 <th scope="row">Rule engine</th>
                 <td>Credit floors and caps, prerequisite order, offering trimester, eligibility, in plain words.</td>
-                <td>Shared</td>
-                <td>Not started.</td>
+                <td>Browser</td>
+                <td>Advisory load, prerequisite, eligibility and historical-offering checks; full degree validation is future work.</td>
               </tr>
               <tr>
                 <th scope="row">Identity</th>
