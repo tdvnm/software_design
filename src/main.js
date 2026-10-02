@@ -62,6 +62,16 @@ async function main() {
         status.textContent = `placed ${course.code} in ${terms.find(t => t.id === termId).label.toLowerCase()}`;
     }
     function refresh() {
+        const active = document.activeElement;
+        const focusedCode = active.closest('[data-code]')?.dataset.code;
+        const focusedTerm = active.closest('[data-term]')?.dataset.term;
+        const wasCourseInfo = active.classList.contains('course-info') || active.classList.contains('add-course');
+        const wasDetailsControl = getElement('details').contains(active);
+        for (const option of getElement('term').options) {
+            option.hidden = option.disabled = !preferences.fourYear && option.value.startsWith('4-');
+        }
+        if (!preferences.fourYear && zoom?.startsWith('4-')) zoom = null;
+        if (!preferences.fourYear && getElement('term').value.startsWith('4-')) getElement('term').value = '3-3';
         document.documentElement.dataset.theme = preferences.theme || 'light';
         getElement('theme-toggle').setAttribute('aria-pressed', String(preferences.theme === 'dark'));
         getElement('theme-toggle').setAttribute('aria-label', preferences.theme === 'dark' ? 'Use light theme' : 'Use dark theme');
@@ -79,6 +89,11 @@ async function main() {
         renderZoom({ ...boardOptions, termId: zoom, onClose() { const previous = zoom; zoom = null; refresh(); document.querySelector(`[data-term="${previous}"] .zoom-button`)?.focus(); } });
         catalogue?.render();
         if (selected) select(selected);
+        if (!active.isConnected) {
+            if (wasCourseInfo && focusedCode) document.querySelector(`#catalogue [data-code="${CSS.escape(focusedCode)}"] .course-info`)?.focus({ preventScroll: true });
+            else if (focusedTerm) document.querySelector(`[data-term="${focusedTerm}"] .zoom-button`)?.focus({ preventScroll: true });
+            else if (wasDetailsControl) getElement('details').querySelector('select, button')?.focus({ preventScroll: true });
+        }
     }
     const programme = setupProgramme(subjects, preferences, () => {
         if (!preferences.fourYear && Object.entries(plan).some(([term, list]) => term.startsWith('4-') && list.length)) {
@@ -86,12 +101,10 @@ async function main() {
             status.textContent = 'Move the courses in year 4 before switching to three years.';
         } else status.textContent = 'programme updated · your courses stayed in place';
         persist();
-        for (const option of getElement('term').options) option.hidden = !preferences.fourYear && option.value.startsWith('4-');
-        if (!preferences.fourYear && zoom?.startsWith('4-')) zoom = null;
-        if (!preferences.fourYear && getElement('term').value.startsWith('4-')) getElement('term').value = '3-3';
         refresh();
     });
-    catalogue = setupCatalogue({ courses, subjects, terms, getPreferences: () => preferences, isPlaced, courseType, onDetails: select, onAdd(course, termId) {
+    catalogue = setupCatalogue({ courses, subjects, terms, getPreferences: () => preferences, getSelectedCode: () => selected?.code, isPlaced, courseType, onDetails: select, onAdd(course, termId) {
+        if (!preferences.fourYear && termId.startsWith('4-')) return;
         if (!isPlaced(course.code)) checkpoint();
         const added = addCourse(plan, termId, course);
         status.textContent = added ? `added ${course.code} to ${terms.find(t => t.id === termId).label.toLowerCase()}` : `${course.code} is already in the plan`;

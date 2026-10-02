@@ -28,6 +28,7 @@ export function restorePlan(value, courses) {
     if (typeof raw.fourYear === 'boolean') preferences.fourYear = raw.fourYear;
     if (terms.some(t => t.year === 4 && plan[t.id].length)) preferences.fourYear = true;
     for (const key of ['showCodes', 'showTitles']) if (typeof raw[key] === 'boolean') preferences[key] = raw[key];
+    if (preferences.showCodes === false && preferences.showTitles !== true) preferences.showCodes = true;
     if (['light', 'dark'].includes(raw.theme)) preferences.theme = raw.theme;
     return { plan, preferences };
 }

@@ -33,6 +33,7 @@ export function setupCatalogue(options) {
             makeDraggable(row, course);
             row.dataset.type = options.courseType?.(course) || (course.subjects.includes('core') ? 'core' : 'other');
             row.classList.toggle('is-placed', placed);
+            row.classList.toggle('is-selected', options.getSelectedCode?.() === course.code);
             const info = createButton('', () => options.onDetails(course));
             info.className = 'course-info';
             info.setAttribute('aria-label', `Details for ${course.code}: ${course.title}`);
