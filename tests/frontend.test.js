@@ -95,7 +95,7 @@ test('foundation starter contains the twelve core courses exactly once', () => {
   assert.equal(countCredits(courses), 36);
   assert.equal(plan['1-1'].length, 4);
   assert.equal(plan['1-2'].length, 4);
-  assert.equal(plan['3-1'][0].code, 'KCCS190');
+  assert.equal(plan['3-3'][0].code, 'KCCS190');
 });
 
 test('prerequisites must precede a course and historical offering warnings are explicit', () => {
@@ -127,4 +127,11 @@ test('programme colours and progress use COMP codes from the current requirement
   const plan = createPlan();
   addCourse(plan, '3-1', course);
   assert.equal(programmeProgress(plan, catalogue, defaultPreferences)[0].done, 1);
+});
+
+
+test('foundation starter honours the environment course term and avoids spurious core offering hints', () => {
+  const plan = foundationPlan(catalogue);
+  const hints = getHints(plan, catalogue, defaultPreferences);
+  assert.ok(!hints.some(h => h.text.includes('timetable snapshot')));
 });

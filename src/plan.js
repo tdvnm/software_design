@@ -36,7 +36,7 @@ export function foundationPlan(courses) {
     const core = courses.filter(c => c.subjects.includes('core')).sort((a, b) => a.code.localeCompare(b.code));
     let index = 0;
     for (const course of core) {
-        const term = /engaging with the environment/i.test(course.title) ? '3-1' : ['1-1', '1-2', '1-3', '2-1'][Math.min(3, Math.floor(index++ / 4))];
+        const term = /engaging with the environment/i.test(course.title) ? `3-${course.offered?.[0] || 3}` : ['1-1', '1-2', '1-3', '2-1'][Math.min(3, Math.floor(index++ / 4))];
         plan[term].push(course);
     }
     return plan;
