@@ -261,3 +261,8 @@ progress::-webkit-progress-value { background: var(--accent); border-radius: 10p
 .help-steps li { padding-left: .4rem; margin-bottom: 1rem; }
 .help-steps strong { display: block; margin-bottom: .2rem; }
 #help-dialog > p.muted { font-size: 11px; margin-bottom: 1.5rem; }
+@media (max-width: 760px) {
+  #catalogue { flex: none; grid-auto-rows: max-content; min-height: 160px; }
+  #catalogue li.catalogue-card { min-height: 100px; }
+}
+.course-chip.is-selected { outline: 2px solid var(--accent); outline-offset: 1px; }
