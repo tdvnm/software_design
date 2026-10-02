@@ -12,7 +12,7 @@ export function activeProgrammes(preferences) {
 export function requirementsFor(preferences) {
     return activeProgrammes(preferences).map(pick => {
         const years = preferences.fourYear ? 4 : 3;
-        const name = pick.role === 'concentration' ? 'Concentration' : pick.role === 'minor' ? `Minor (${years} Year)` : `${years} Year ${preferences.structure === 'double-major' ? 'Double' : 'Single'} Major`;
+        const name = pick.role === 'concentration' ? `Concentration (${years} Year)` : pick.role === 'minor' ? `Minor (${years} Year)` : `${years} Year ${preferences.structure === 'double-major' ? 'Double' : 'Single'} Major`;
         return { ...pick, ...(programmes[pick.subject]?.find(item => item.name === name) || { required: [] }) };
     });
 }

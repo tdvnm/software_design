@@ -135,3 +135,9 @@ test('foundation starter honours the environment course term and avoids spurious
   const hints = getHints(plan, catalogue, defaultPreferences);
   assert.ok(!hints.some(h => h.text.includes('timetable snapshot')));
 });
+
+test('concentration credit notes follow the selected degree duration', () => {
+  const preferences = { ...defaultPreferences, major: 'mathematics', concentration: 'computer science', structure: 'major-conc' };
+  assert.equal(requirementsFor(preferences)[1].total_credits, 20);
+  assert.equal(requirementsFor({ ...preferences, fourYear: false })[1].total_credits, 16);
+});

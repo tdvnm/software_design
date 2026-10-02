@@ -101,7 +101,7 @@ export const programmes = {
       "additional": "16 elective credits in the credit table"
     },
     {
-      "name": "Concentration",
+      "name": "Concentration (3 Year)",
       "required": [
         "MATH191",
         "MATH201",
@@ -109,8 +109,20 @@ export const programmes = {
         "MATH230"
       ],
       "source": "https://krea.edu.in/sias/mathematics-at-krea/",
-      "total_credits": 16,
-      "additional": ""
+      "additional": "",
+      "total_credits": 16
+    },
+    {
+      "name": "Concentration (4 Year)",
+      "required": [
+        "MATH191",
+        "MATH201",
+        "MATH202",
+        "MATH230"
+      ],
+      "source": "https://krea.edu.in/sias/mathematics-at-krea/",
+      "additional": "",
+      "total_credits": 16
     }
   ],
   "political science": [
@@ -208,14 +220,24 @@ export const programmes = {
       "additional": "16 elective credits in the credit table"
     },
     {
-      "name": "Concentration",
+      "name": "Concentration (3 Year)",
       "required": [
         "POLT202",
         "POLT313"
       ],
       "source": "https://krea.edu.in/sias/politics-at-krea/",
-      "total_credits": 16,
-      "additional": "8 elective credits in the credit table"
+      "additional": "8 elective credits in the credit table",
+      "total_credits": 16
+    },
+    {
+      "name": "Concentration (4 Year)",
+      "required": [
+        "POLT202",
+        "POLT313"
+      ],
+      "source": "https://krea.edu.in/sias/politics-at-krea/",
+      "additional": "8 elective credits in the credit table",
+      "total_credits": 16
     }
   ],
   "economics": [
@@ -330,7 +352,7 @@ export const programmes = {
       "additional": ""
     },
     {
-      "name": "Concentration",
+      "name": "Concentration (3 Year)",
       "required": [
         "ECON201",
         "ECON202",
@@ -339,8 +361,21 @@ export const programmes = {
         "ECON212"
       ],
       "source": "https://krea.edu.in/sias/economics-at-krea-2/",
-      "total_credits": 16,
-      "additional": ""
+      "additional": "",
+      "total_credits": 16
+    },
+    {
+      "name": "Concentration (4 Year)",
+      "required": [
+        "ECON201",
+        "ECON202",
+        "ECON203",
+        "ECON211",
+        "ECON212"
+      ],
+      "source": "https://krea.edu.in/sias/economics-at-krea-2/",
+      "additional": "",
+      "total_credits": 16
     }
   ],
   "environmental studies": [
@@ -427,11 +462,18 @@ export const programmes = {
       "additional": "No fixed course list for this track in the snapshot. Check the programme page."
     },
     {
-      "name": "Concentration",
+      "name": "Concentration (3 Year)",
       "required": [],
       "source": "https://krea.edu.in/sias/environmental-studies-at-krea/",
-      "total_credits": 16,
-      "additional": "No fixed course list for this track in the snapshot. Check the programme page."
+      "additional": "No fixed course list for this track in the snapshot. Check the programme page.",
+      "total_credits": 16
+    },
+    {
+      "name": "Concentration (4 Year)",
+      "required": [],
+      "source": "https://krea.edu.in/sias/environmental-studies-at-krea/",
+      "additional": "No fixed course list for this track in the snapshot. Check the programme page.",
+      "total_credits": 16
     }
   ],
   "sociology": [
@@ -534,7 +576,7 @@ export const programmes = {
       "additional": "16 elective credits in the credit table"
     },
     {
-      "name": "Concentration",
+      "name": "Concentration (3 Year)",
       "required": [
         "SOCL206",
         "SOCL211",
@@ -545,8 +587,23 @@ export const programmes = {
         "SOCL406"
       ],
       "source": "https://krea.edu.in/sias/sociology-and-anthropology-at-krea/",
-      "total_credits": 16,
-      "additional": ""
+      "additional": "",
+      "total_credits": 16
+    },
+    {
+      "name": "Concentration (4 Year)",
+      "required": [
+        "SOCL206",
+        "SOCL211",
+        "SOCL305",
+        "SOCL306",
+        "SOCL328",
+        "SOCL335",
+        "SOCL406"
+      ],
+      "source": "https://krea.edu.in/sias/sociology-and-anthropology-at-krea/",
+      "additional": "4 elective credits in the credit table",
+      "total_credits": 20
     }
   ],
   "computer science": [
@@ -656,15 +713,26 @@ export const programmes = {
       "additional": "8 elective credits in the credit table"
     },
     {
-      "name": "Concentration",
+      "name": "Concentration (3 Year)",
       "required": [
         "COMP201",
         "COMP204",
         "COMP205"
       ],
       "source": "https://krea.edu.in/sias/computer-science-at-krea/",
-      "total_credits": 16,
-      "additional": "4 elective credits in the credit table"
+      "additional": "4 elective credits in the credit table",
+      "total_credits": 16
+    },
+    {
+      "name": "Concentration (4 Year)",
+      "required": [
+        "COMP201",
+        "COMP204",
+        "COMP205"
+      ],
+      "source": "https://krea.edu.in/sias/computer-science-at-krea/",
+      "additional": "8 elective credits in the credit table",
+      "total_credits": 20
     }
   ],
   "literature": [
@@ -759,11 +827,18 @@ export const programmes = {
       "additional": "16 elective credits in the credit table"
     },
     {
-      "name": "Concentration",
+      "name": "Concentration (3 Year)",
       "required": [],
       "source": "https://krea.edu.in/sias/literature-at-krea/",
-      "total_credits": 16,
-      "additional": "No fixed course list for this track in the snapshot. Check the programme page."
+      "additional": "No fixed course list for this track in the snapshot. Check the programme page.",
+      "total_credits": 16
+    },
+    {
+      "name": "Concentration (4 Year)",
+      "required": [],
+      "source": "https://krea.edu.in/sias/literature-at-krea/",
+      "additional": "No fixed course list for this track in the snapshot. Check the programme page.",
+      "total_credits": 16
     }
   ],
   "data science": [
@@ -873,7 +948,7 @@ export const programmes = {
       "additional": "4 elective credits in the credit table"
     },
     {
-      "name": "Concentration",
+      "name": "Concentration (3 Year)",
       "required": [
         "DATA201",
         "DATA203",
@@ -881,8 +956,20 @@ export const programmes = {
         "DATA205"
       ],
       "source": "https://krea.edu.in/sias/data-science-at-krea/",
-      "total_credits": 16,
-      "additional": ""
+      "additional": "",
+      "total_credits": 16
+    },
+    {
+      "name": "Concentration (4 Year)",
+      "required": [
+        "DATA201",
+        "DATA203",
+        "DATA204",
+        "DATA205"
+      ],
+      "source": "https://krea.edu.in/sias/data-science-at-krea/",
+      "additional": "",
+      "total_credits": 16
     }
   ],
   "psychology": [
@@ -985,10 +1072,16 @@ export const programmes = {
       "additional": "12 elective credits in the credit table"
     },
     {
-      "name": "Concentration",
+      "name": "Concentration (3 Year)",
       "required": [],
       "source": "https://krea.edu.in/sias/psychology-at-krea/",
-      "total_credits": 16,
+      "additional": "No fixed course list for this track in the snapshot. Check the programme page.",
+      "total_credits": 16
+    },
+    {
+      "name": "Concentration (4 Year)",
+      "required": [],
+      "source": "https://krea.edu.in/sias/psychology-at-krea/",
       "additional": "No fixed course list for this track in the snapshot. Check the programme page."
     }
   ],
@@ -1132,7 +1225,7 @@ export const programmes = {
       "additional": "10 elective credits in the credit table"
     },
     {
-      "name": "Concentration",
+      "name": "Concentration (3 Year)",
       "required": [
         "PHYS201",
         "PHYS221",
@@ -1142,8 +1235,22 @@ export const programmes = {
         "PHYS236"
       ],
       "source": "https://krea.edu.in/sias/physics-at-krea/",
-      "total_credits": 18,
-      "additional": ""
+      "additional": "",
+      "total_credits": 18
+    },
+    {
+      "name": "Concentration (4 Year)",
+      "required": [
+        "PHYS201",
+        "PHYS221",
+        "PHYS223",
+        "PHYS224",
+        "PHYS231",
+        "PHYS236"
+      ],
+      "source": "https://krea.edu.in/sias/physics-at-krea/",
+      "additional": "",
+      "total_credits": 18
     }
   ],
   "chemistry": [
@@ -1260,7 +1367,7 @@ export const programmes = {
       "additional": "8 elective credits in the credit table"
     },
     {
-      "name": "Concentration",
+      "name": "Concentration (3 Year)",
       "required": [
         "CHEM206",
         "CHEM207",
@@ -1269,8 +1376,21 @@ export const programmes = {
         "CHEM217"
       ],
       "source": "https://krea.edu.in/sias/chemistry-at-krea/",
-      "total_credits": 18,
-      "additional": ""
+      "additional": "",
+      "total_credits": 18
+    },
+    {
+      "name": "Concentration (4 Year)",
+      "required": [
+        "CHEM206",
+        "CHEM207",
+        "CHEM208",
+        "CHEM216",
+        "CHEM217"
+      ],
+      "source": "https://krea.edu.in/sias/chemistry-at-krea/",
+      "additional": "",
+      "total_credits": 18
     }
   ],
   "biology": [
@@ -1383,14 +1503,24 @@ export const programmes = {
       "additional": "4 elective credits in the credit table"
     },
     {
-      "name": "Concentration",
+      "name": "Concentration (3 Year)",
       "required": [
         "BIOS201",
         "BIOS218"
       ],
       "source": "https://krea.edu.in/sias/biological-sciences-at-krea/",
-      "total_credits": 16,
-      "additional": "8 elective credits in the credit table"
+      "additional": "8 elective credits in the credit table",
+      "total_credits": 16
+    },
+    {
+      "name": "Concentration (4 Year)",
+      "required": [
+        "BIOS201",
+        "BIOS218"
+      ],
+      "source": "https://krea.edu.in/sias/biological-sciences-at-krea/",
+      "additional": "8 elective credits in the credit table",
+      "total_credits": 16
     }
   ],
   "history": [
@@ -1453,11 +1583,18 @@ export const programmes = {
       "additional": "No fixed course list for this track in the snapshot. Check the programme page."
     },
     {
-      "name": "Concentration",
+      "name": "Concentration (3 Year)",
       "required": [],
       "source": "https://krea.edu.in/sias/history-at-krea/",
-      "total_credits": 16,
-      "additional": "No fixed course list for this track in the snapshot. Check the programme page."
+      "additional": "No fixed course list for this track in the snapshot. Check the programme page.",
+      "total_credits": 16
+    },
+    {
+      "name": "Concentration (4 Year)",
+      "required": [],
+      "source": "https://krea.edu.in/sias/history-at-krea/",
+      "additional": "No fixed course list for this track in the snapshot. Check the programme page.",
+      "total_credits": 16
     }
   ]
 };
