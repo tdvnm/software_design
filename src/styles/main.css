@@ -7,9 +7,13 @@
   --board: #edeef0; --cell: #e1e3e8; --board-line: #c4c7ce; --board-text: #616976;
   --core: #f8dcda; --elective: #e4e6f5; --other: #ece8e8;
   --warn: #f2d7d7; --caution: #f6e7c2; --good: #e0efe4;
+  /* a tight contact shadow plus a wider soft one, so surfaces sit on the page */
   --shadow: 0 1px 2px #90727219, 0 3px 8px #90727214;
-  --shine: inset 0 1px 0 #ffffffed, inset 0 -5px 8px -7px #966a7838;
-  --well: inset 0 2px 4px #78546026;
+  --shadow-hover: 0 2px 4px #90727221, 0 6px 14px #9072721f;
+  /* the gloss: a lit top edge, that light bleeding down the face, a shaded base */
+  --shine: inset 0 1px 0 #fffffff2, inset 0 6px 9px -6px #ffffffbf, inset 0 -5px 8px -7px #966a7838;
+  --shine-hover: inset 0 1px 0 #fffffff2, inset 0 7px 10px -6px #ffffffcc, inset 0 -6px 9px -7px #966a7838;
+  --well: inset 0 2px 4px #78546038, inset 0 -1px 0 #ffffff80;
 }
 * { box-sizing: border-box; scrollbar-width: thin; scrollbar-color: var(--line) transparent; }
 body { margin: 0; font-family: 'Ubuntu Sans', system-ui, sans-serif; color: var(--text); background: var(--bg); line-height: 1.45; }
