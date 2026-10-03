@@ -122,9 +122,11 @@ body:not(.planner-page) section, .card { background: var(--paper); border: 1px s
 @media (max-width: 1050px) { #workspace { grid-template-columns: 185px 230px minmax(320px, 1fr); } .details-panel { grid-column: 1 / -1; border-top: 1px solid var(--border); } }
 @media (max-width: 760px) { #workspace { display: block; height: auto; } #catalogue { max-height: 420px; } .plan-section { min-height: 650px; } .programme-panel { overflow: visible; } .plan-table { min-width: 430px; } }
 #catalogue li.catalogue-card { padding: 0; overflow: hidden; background: var(--card); }
-#catalogue li[data-type=core] { background: var(--core); }
-#catalogue li[data-type=elective] { background: var(--elective); }
-#catalogue li[data-type=other] { background: var(--paper); }
+/* a course surface is outlined in a darker shade of its own fill, so the
+   legend still reads left to right at any size */
+#catalogue li[data-type=core], .course-chip[data-type=core], .zoom-course[data-type=core], .board-legend i[data-type=core] { background: var(--core); border-color: var(--core-deep); }
+#catalogue li[data-type=elective], .course-chip[data-type=elective], .zoom-course[data-type=elective], .board-legend i[data-type=elective] { background: var(--elective); border-color: var(--elective-deep); }
+#catalogue li[data-type=other], .course-chip[data-type=other], .zoom-course[data-type=other], .board-legend i[data-type=other] { background: var(--audit); border-color: var(--audit-deep); }
 #catalogue .course-info { display: flex; flex-direction: column; gap: .25rem; width: 100%; padding: .75rem .8rem .3rem; margin: 0; border: 0; border-radius: 0; text-align: left; background: transparent; box-shadow: none; }
 .course-code { font-size: 14px; font-weight: 700; }
 .course-title { font-size: 12px; line-height: 1.35; }
@@ -137,8 +139,6 @@ body:not(.planner-page) section, .card { background: var(--paper); border: 1px s
 .term-placeholder { margin: auto; font-size: 10px; color: var(--board-text); opacity: .6; }
 .term-summary { display: flex; align-items: center; justify-content: space-between; margin-top: .5rem; font-size: 10px; color: var(--board-text); }
 .course-chip { display: flex; align-items: stretch; min-width: 0; border: 1px solid var(--line); border-radius: 4px; background: var(--paper); box-shadow: var(--shine), var(--shadow); }
-.course-chip[data-type=core] { background: var(--core); }
-.course-chip[data-type=elective] { background: var(--elective); }
 .plan-table .chip-label { flex: 1; min-width: 0; text-align: left; padding: .35rem .4rem; font-size: 10px; font-weight: 600; overflow-wrap: anywhere; }
 .plan-table .chip-label, .plan-table .chip-remove { border: 0; background: none; box-shadow: none; }
 .plan-table .chip-remove { flex-shrink: 0; padding: .25rem; font-size: 13px; opacity: .6; }
@@ -167,8 +167,6 @@ body:not(.planner-page) section, .card { background: var(--paper); border: 1px s
 .zoom-heading > span { font-size: 11px; margin-left: auto; }
 .zoom-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); grid-auto-rows: minmax(100px, auto); gap: .6rem; min-height: 410px; align-content: start; border: 1px dashed var(--border); border-radius: 8px; padding: .65rem; background: repeating-linear-gradient(transparent 0, transparent 106px, var(--board-line) 106px, var(--board-line) 107px); }
 .zoom-course { position: relative; border: 1px solid var(--line); border-radius: 6px; background: var(--paper); box-shadow: var(--shine), var(--shadow); }
-.zoom-course[data-type=core] { background: var(--core); }
-.zoom-course[data-type=elective] { background: var(--elective); }
 .zoom-course-details { display: flex; flex-direction: column; gap: .5rem; text-align: left; width: 100%; height: 100%; padding: 1rem 1.7rem 1rem 1rem; border: 0; background: none; box-shadow: none; }
 .zoom-course-details strong { font-size: 17px; }
 .zoom-course-details small { margin-top: auto; }
@@ -199,9 +197,6 @@ progress::-webkit-progress-value { background: var(--accent); border-radius: 10p
 .board-legend { display: flex; gap: .9rem; flex-wrap: wrap; padding: .75rem 1.4rem 0; color: var(--board-text); font-size: 10px; }
 .board-legend > span { display: flex; gap: .35rem; align-items: center; }
 .board-legend i { width: 9px; height: 9px; border: 1px solid var(--line); border-radius: 2px; background: var(--card); }
-.board-legend i[data-type=core] { background: var(--core); }
-.board-legend i[data-type=elective] { background: var(--elective); }
-.board-legend i[data-type=other] { background: var(--other); }
 .quick-filters { display: flex; gap: .4rem; margin-bottom: .8rem; }
 .quick-filters button { font-size: 11px; padding: .25rem .6rem; }
 .quick-filters button[aria-pressed=true] { color: var(--paper); background-color: var(--accent); }
