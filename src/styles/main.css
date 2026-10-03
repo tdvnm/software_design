@@ -80,7 +80,8 @@ h1, h2, h3 { line-height: 1.25; }
 .target-row select { flex: 1; min-width: 0; font-size: 11px; padding: .3rem; }
 #count { font-size: 10px; padding-top: .65rem; }
 #catalogue { margin: 0; padding: .4rem 1rem 1.25rem; list-style: none; overflow-y: auto; flex: 1; }
-#catalogue li { margin-bottom: .6rem; padding: .7rem; background: var(--card); border: 1px solid var(--line); border-radius: 5px; box-shadow: var(--shine), var(--shadow); }
+#catalogue li { margin-bottom: .6rem; padding: .7rem; background: linear-gradient(var(--card), var(--card-end)); border: 1px solid var(--line); border-radius: 4px; box-shadow: var(--shine), var(--shadow); }
+#catalogue li:hover { box-shadow: var(--shine-hover), var(--shadow-hover); }
 #catalogue button { font-size: 11px; margin-top: .5rem; }
 .plan-section { display: flex; flex-direction: column; background: var(--board); overflow-y: auto; }
 .board-heading { background: linear-gradient(var(--board), var(--cell)); border-color: var(--board-line); }
