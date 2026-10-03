@@ -19,6 +19,10 @@
   /* the gloss: a lit top edge, that light bleeding down the face, a shaded base */
   --shine: inset 0 1px 0 #fffffff2, inset 0 6px 9px -6px #ffffffbf, inset 0 -5px 8px -7px #966a7838;
   --shine-hover: inset 0 1px 0 #fffffff2, inset 0 7px 10px -6px #ffffffcc, inset 0 -6px 9px -7px #966a7838;
+  /* the convex face laid over a button's own colour — lit upper half, crease at
+     the midline, shaded lower half. -accent survives on a saturated fill. */
+  --gloss: linear-gradient(#ffffffb8, #ffffff4d 48%, #966a780d 52%, #966a7829);
+  --gloss-accent: linear-gradient(#ffffff6b, #ffffff29 48%, #0000000d 52%, #0000002e);
   --well: inset 0 2px 4px #78546038, inset 0 -1px 0 #ffffff80;
 }
 * { box-sizing: border-box; scrollbar-width: thin; scrollbar-color: var(--line) transparent; }
@@ -27,9 +31,10 @@ a { color: var(--accent); text-underline-offset: .2em; }
 button, input, select { font: inherit; color: inherit; }
 button, select { cursor: pointer; }
 button, input, select { border: 1px solid var(--line); border-radius: 5px; padding: .5rem .6rem; max-width: 100%; background: var(--paper); }
-button { background-image: linear-gradient(#ffffff80, #ffffff20 48%, #966a7810 52%, #966a7820); box-shadow: var(--shine), var(--shadow); }
-button:hover:not(:disabled) { border-color: var(--border); filter: brightness(.98); }
-button:active:not(:disabled) { box-shadow: var(--well); }
+button { background-image: var(--gloss); box-shadow: var(--shine), var(--shadow); }
+button:hover:not(:disabled) { border-color: var(--border); box-shadow: var(--shine-hover), var(--shadow-hover); }
+/* pressed: the face sinks into its own shadow */
+button:active:not(:disabled) { transform: translateY(1px); box-shadow: var(--well); }
 button:disabled { opacity: .5; cursor: default; }
 input[type=checkbox] { accent-color: var(--accent); width: 14px; height: 14px; }
 :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
