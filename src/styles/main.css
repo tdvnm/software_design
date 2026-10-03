@@ -5,8 +5,14 @@
   --rail: #fdf5f3; --rail-end: #f8ece8; --warm: #f0ddd6;
   --head: #fff4f2; --head-end: #f0d4cc;
   --board: #edeef0; --cell: #e1e3e8; --board-line: #c4c7ce; --board-text: #616976;
-  --core: #f8dcda; --elective: #e4e6f5; --other: #ece8e8;
-  --warn: #f2d7d7; --caution: #f6e7c2; --good: #e0efe4;
+  --core: #f8dcda; --core-deep: #dfaeae; --elective: #e4e6f5; --elective-deep: #b4bade;
+  --other: #ece8e8; --audit: #d9f4e8; --audit-deep: #9fd4bd;
+  --warn: #f2d7d7; --warn-deep: #c08585; --caution: #f6e7c2; --caution-deep: #ceac62;
+  --good: #e0efe4; --good-deep: #8fbb9d; --info: #e7dee0; --info-deep: #b6a2a8;
+  /* card surfaces are a faint top-to-bottom fall, not a flat fill */
+  --card-end: #fffaf9; --divider: #f0e0e0;
+  /* the ruled-paper zones behind the trimester zoom */
+  --zone-min: #dcb9be; --zone-rest: #faf3f3; --zone-line: #7d5866;
   /* a tight contact shadow plus a wider soft one, so surfaces sit on the page */
   --shadow: 0 1px 2px #90727219, 0 3px 8px #90727214;
   --shadow-hover: 0 2px 4px #90727221, 0 6px 14px #9072721f;
