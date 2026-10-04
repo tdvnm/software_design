@@ -197,9 +197,13 @@ progress::-webkit-progress-value { background: var(--accent); border-radius: 10p
 .board-legend { display: flex; gap: .9rem; flex-wrap: wrap; padding: .75rem 1.4rem 0; color: var(--board-text); font-size: 10px; }
 .board-legend > span { display: flex; gap: .35rem; align-items: center; }
 .board-legend i { width: 9px; height: 9px; border: 1px solid var(--line); border-radius: 2px; background: var(--card); }
-.quick-filters { display: flex; gap: .4rem; margin-bottom: .8rem; }
-.quick-filters button { font-size: 11px; padding: .25rem .6rem; }
-.quick-filters button[aria-pressed=true] { color: var(--paper); background-color: var(--accent); }
+/* one continuous segmented bar: segments flush, a hairline between them, the
+   live segment lit like the accent buttons — no gaps, no inner corners */
+.quick-filters { display: flex; overflow: hidden; margin-bottom: .8rem; border: 1px solid var(--accent); border-radius: 6px; box-shadow: var(--shine), var(--shadow); }
+.quick-filters button { flex: 1; font-size: 11px; padding: .3rem .6rem; border: 0; border-radius: 0; color: var(--muted); white-space: nowrap; box-shadow: none; }
+.quick-filters button + button { border-left: 1px solid var(--accent); }
+.quick-filters button:hover:not(:disabled) { color: var(--text); box-shadow: none; }
+.quick-filters button[aria-pressed=true] { color: #fff8f8; background-color: var(--accent); background-image: var(--gloss-accent); }
 :root[data-theme=dark] {
   color-scheme: dark;
   --text: #f1e3e7; --muted: #c0a7b0; --accent: #a76b90; --border: #7b5665;
