@@ -218,13 +218,23 @@ progress::-webkit-progress-value { background: var(--accent); border-radius: 10p
   --rail: #271e23; --rail-end: #221a1e; --warm: #2a2126;
   --head: #34272c; --head-end: #281e23;
   --board: #21242b; --cell: #2b2f37; --board-line: #434854; --board-text: #b2baca;
-  --core: #4e333a; --elective: #343a55; --other: #372c32;
-  --warn: #4a2b2f; --caution: #453923; --good: #2a4038;
+  --core: #4e333a; --core-deep: #7d4f59; --elective: #343a55; --elective-deep: #5c638f;
+  --other: #372c32; --audit: #26443d; --audit-deep: #4a7d6d;
+  --warn: #4a2b2f; --warn-deep: #8c5057; --caution: #453923; --caution-deep: #8a6f38;
+  --good: #2a4038; --good-deep: #558068; --info: #372c32; --info-deep: #6a565e;
+  --card-end: #2c2227; --divider: #382b31;
+  --zone-min: #3f3037; --zone-rest: #272025; --zone-line: #8a6675;
   --shadow: 0 1px 2px #0006, 0 3px 8px #0004;
-  --shine: inset 0 1px 0 #ffffff18; --well: inset 0 2px 4px #0005;
+  --shadow-hover: 0 2px 4px #0000008c, 0 6px 14px #0000005c;
+  /* the same domed surface, lit by a much weaker highlight — a bright white top
+     edge on a dark fill reads as a scratch, not a sheen */
+  --shine: inset 0 1px 0 #ffffff1c, inset 0 5px 8px -6px #ffffff1a, inset 0 -5px 8px -7px #00000080;
+  --shine-hover: inset 0 1px 0 #ffffff29, inset 0 7px 10px -6px #ffffff21, inset 0 -6px 9px -7px #0000008c;
+  --gloss: linear-gradient(#ffffff1f, #ffffff05 52%, #00000042);
+  --gloss-accent: linear-gradient(#ffffff42, #ffffff0a 52%, #00000033);
+  --well: inset 0 2px 4px #00000073, inset 0 -1px 0 #ffffff0f;
 }
 .theme-toggle { font-size: 19px; border: 0; background: none; box-shadow: none; padding: .2rem; line-height: 1; }
-:root[data-theme=dark] button { background-image: linear-gradient(#ffffff10, #00000010); }
 :root[data-theme=dark] .theme-toggle, :root[data-theme=dark] .course-info { background-image: none; }
 :root[data-theme=dark] .primary-button, :root[data-theme=dark] .quick-filters button[aria-pressed=true] { color: #fff8f8; }
 /* Keep every region reachable on a smaller screen, including course details. */
