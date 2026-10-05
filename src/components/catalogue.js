@@ -4,9 +4,7 @@ import { addOption, createButton, element, getElement } from '../lib/dom.js';
 export function setupCatalogue(options) {
     const search = getElement('search');
     const subject = getElement('subject');
-    const term = getElement('term');
     options.subjects.forEach(value => addOption(subject, value));
-    options.terms.forEach(value => addOption(term, value.id, value.label));
     const list = getElement('catalogue');
     subject.value = options.getPreferences?.().major || ''; 
     function render() {
@@ -39,7 +37,7 @@ export function setupCatalogue(options) {
             info.setAttribute('aria-label', `Details for ${course.code}: ${course.title}`);
             info.append(element('strong', 'course-code', course.code), element('span', 'course-title', course.title));
             const footer = element('div', 'card-footer');
-            const add = createButton(placed ? '✓ in plan' : '+ add', () => options.onAdd(course, term.value));
+            const add = createButton(placed ? '✓ in plan' : '+ add', () => options.onAdd(course));
             add.className = 'add-course';
             add.disabled = placed;
             add.setAttribute('aria-label', placed ? `${course.code} is in your plan` : `Add ${course.code}`);

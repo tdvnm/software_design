@@ -17,7 +17,7 @@ export function showDetails(course, options = {}) {
         const label = element('label', 'detail-placement', 'place in trimester');
         const term = element('select');
         for (const t of terms.filter(t => options.fourYear !== false || t.year < 4)) term.add(new Option(t.label, t.id));
-        term.value = options.termId || getElement('term').value;
+        term.value = options.termId || options.suggestedTerm || terms[0].id;
         label.append(term);
         const place = createButton(options.termId ? 'move course' : 'add to plan', () => options.onMove(course.code, term.value));
         place.className = 'primary-button';

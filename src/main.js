@@ -67,11 +67,7 @@ async function main() {
         const focusedTerm = active.closest('[data-term]')?.dataset.term;
         const wasCourseInfo = active.classList.contains('course-info') || active.classList.contains('add-course');
         const wasDetailsControl = getElement('details').contains(active);
-        for (const option of getElement('term').options) {
-            option.hidden = option.disabled = !preferences.fourYear && option.value.startsWith('4-');
-        }
         if (!preferences.fourYear && zoom?.startsWith('4-')) zoom = null;
-        if (!preferences.fourYear && getElement('term').value.startsWith('4-')) getElement('term').value = '3-3';
         document.documentElement.dataset.theme = preferences.theme || 'light';
         getElement('theme-toggle').setAttribute('aria-pressed', String(preferences.theme === 'dark'));
         getElement('theme-toggle').setAttribute('aria-label', preferences.theme === 'dark' ? 'Use light theme' : 'Use dark theme');
@@ -82,7 +78,7 @@ async function main() {
         classify = makeCourseType(preferences, courses);
         renderHints(plan, courses, preferences);
         const boardOptions = { plan, showCodes: preferences.showCodes !== false, showTitles: preferences.showTitles === true, fourYear: preferences.fourYear, courseType, onDetails: select, onMove: move,
-            onZoom(termId) { zoom = termId; getElement('term').value = termId; refresh(); getElement('zoom').querySelector('button').focus(); },
+            onZoom(termId) { zoom = termId; refresh(); getElement('zoom').querySelector('button').focus(); },
             onRemove(termId, code) { checkpoint(); removeCourse(plan, termId, code); persist(); status.textContent = `removed ${code}`; refresh(); }
         };
         renderBoard(boardOptions);
