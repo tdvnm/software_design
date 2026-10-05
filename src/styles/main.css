@@ -80,8 +80,8 @@ h1, h2, h3 { line-height: 1.25; }
 .target-row select { flex: 1; min-width: 0; font-size: 11px; padding: .3rem; }
 #count { font-size: 10px; padding-top: .65rem; }
 #catalogue { margin: 0; padding: .4rem 1rem 1.25rem; list-style: none; overflow-y: auto; flex: 1; }
-#catalogue li { margin-bottom: .6rem; padding: .7rem; background: linear-gradient(var(--card), var(--card-end)); border: 1px solid var(--line); border-radius: 4px; box-shadow: var(--shine), var(--shadow); }
-#catalogue li:hover { box-shadow: var(--shine-hover), var(--shadow-hover); }
+#catalogue li { margin-bottom: .45rem; padding: .7rem; background: linear-gradient(var(--card), var(--card-end)); border: 1px solid var(--line); border-radius: 6px; box-shadow: var(--shadow); }
+#catalogue li:hover { box-shadow: var(--shadow-hover); }
 #catalogue button { font-size: 11px; margin-top: .5rem; }
 .plan-section { display: flex; flex-direction: column; background: var(--board); overflow-y: auto; }
 .board-heading { background: linear-gradient(var(--board), var(--cell)); border-color: var(--board-line); }
@@ -121,16 +121,18 @@ body:not(.planner-page) section, .card { background: var(--paper); border: 1px s
 .about .project-question { padding: 1rem; border-left: 3px solid var(--accent); background: var(--rail-end); }
 @media (max-width: 1050px) { #workspace { grid-template-columns: 185px 230px minmax(320px, 1fr); } .details-panel { grid-column: 1 / -1; border-top: 1px solid var(--border); } }
 @media (max-width: 760px) { #workspace { display: block; height: auto; } #catalogue { max-height: 420px; } .plan-section { min-height: 650px; } .programme-panel { overflow: visible; } .plan-table { min-width: 430px; } }
-#catalogue li.catalogue-card { padding: 0; overflow: hidden; background: var(--card); }
+#catalogue li.catalogue-card { position: relative; padding: 0; overflow: hidden; background: linear-gradient(var(--card), var(--card-end)); }
 /* a course surface is outlined in a darker shade of its own fill, so the
    legend still reads left to right at any size */
 #catalogue li[data-type=core], .course-chip[data-type=core], .zoom-course[data-type=core], .board-legend i[data-type=core] { background: var(--core); border-color: var(--core-deep); }
 #catalogue li[data-type=elective], .course-chip[data-type=elective], .zoom-course[data-type=elective], .board-legend i[data-type=elective] { background: var(--elective); border-color: var(--elective-deep); }
 #catalogue li[data-type=other], .course-chip[data-type=other], .zoom-course[data-type=other], .board-legend i[data-type=other] { background: var(--audit); border-color: var(--audit-deep); }
-#catalogue .course-info { display: flex; flex-direction: column; gap: .25rem; width: 100%; padding: .75rem .8rem .3rem; margin: 0; border: 0; border-radius: 0; text-align: left; background: transparent; box-shadow: none; }
+/* code over a muted title, with the right edge kept clear for the add control */
+#catalogue .course-info { display: flex; flex-direction: column; gap: .15rem; width: 100%; padding: .55rem 2.2rem .1rem .75rem; margin: 0; border: 0; border-radius: 0; text-align: left; background: transparent; background-image: none; box-shadow: none; }
+#catalogue .course-info:hover { box-shadow: none; }
 .course-code { font-size: 14px; font-weight: 700; }
-.course-title { font-size: 12px; line-height: 1.35; }
-.card-footer { display: flex; align-items: center; justify-content: space-between; padding: .3rem .6rem .5rem .8rem; }
+.course-title { font-size: 12px; line-height: 1.35; color: var(--muted); }
+.card-footer { display: flex; align-items: center; justify-content: space-between; padding: 0 .75rem .5rem; }
 .course-credits { font-size: 10px; color: var(--muted); }
 #catalogue .add-course { font-size: 10px; padding: .2rem .45rem; margin: 0; box-shadow: none; background: #ffffff55; }
 #catalogue .is-placed { opacity: .6; border-style: dashed; box-shadow: none; }
