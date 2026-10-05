@@ -183,9 +183,12 @@ body:not(.planner-page) section, .card { background: var(--paper); border: 1px s
 progress { width: 100%; height: 5px; margin: .25rem 0; accent-color: var(--accent); border: 0; }
 progress::-webkit-progress-bar { background: var(--line); border-radius: 10px; }
 progress::-webkit-progress-value { background: var(--accent); border-radius: 10px; }
-.hint { padding: .65rem .7rem; margin: .6rem 0; background: var(--other); border: 1px solid var(--line); border-radius: 4px; font-size: 11px; line-height: 1.45; }
-.hint-warn { background: var(--warn); border-color: #c08585; }
-.hint-caution { background: var(--caution); border-color: #ceac62; }
+/* each chip fill carries a -deep partner as its border, so a hint is outlined
+   in a darker shade of itself instead of a shared grey */
+.hint { padding: .65rem .7rem; margin: .6rem 0; background: var(--info); border: 1px solid var(--info-deep); border-radius: 4px; font-size: 11px; line-height: 1.45; }
+.hint-warn { background: var(--warn); border-color: var(--warn-deep); }
+.hint-caution { background: var(--caution); border-color: var(--caution-deep); }
+.hint-good { background: var(--good); border-color: var(--good-deep); }
 .hint-footnote { font-size: 10px; margin-top: 1rem; }
 .plan-actions { display: flex; gap: .35rem; }
 .plan-actions button { font-size: 10px; padding: .3rem .55rem; }
