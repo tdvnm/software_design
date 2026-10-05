@@ -12,6 +12,7 @@ export function renderBoard(options) {
         for (const term of terms.filter(term => term.year === year)) {
             const cell = element('td', 'term-cell');
             cell.dataset.term = term.id;
+            cell.dataset.trimester = term.id.split('-')[1];
             makeDropTarget(cell, code => options.onMove?.(code, term.id));
             cell.setAttribute('aria-label', term.label);
             const stack = element('div', 'term-courses');

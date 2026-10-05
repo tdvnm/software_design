@@ -165,6 +165,11 @@ body:not(.planner-page) section, .card { background: var(--paper); border: 1px s
 .detail-links button { padding: .3rem .5rem; font-size: 11px; }
 .catalogue-card[draggable], .course-chip[draggable] { cursor: grab; }
 .is-dragging { opacity: .35; }
+/* while a course is in hand, the trimesters it is actually offered in turn
+   green, so you can see where it can go before you let go of it */
+body[data-drag-offered~='1'] .plan-table td[data-trimester='1'],
+body[data-drag-offered~='2'] .plan-table td[data-trimester='2'],
+body[data-drag-offered~='3'] .plan-table td[data-trimester='3'] { background: var(--good); border-color: var(--good-deep); }
 .plan-table td.drop-target { outline: 2px dashed var(--accent); outline-offset: 3px; background: var(--warm); }
 .detail-placement { display: flex; flex-direction: column; gap: .4rem; font-size: 11px; margin: 1rem 0 .5rem; }
 .primary-button { width: 100%; color: #fff8f8; background-color: var(--accent); background-image: var(--gloss-accent); border-color: var(--accent); font-size: 12px; }

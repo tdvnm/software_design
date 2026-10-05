@@ -4,9 +4,13 @@ export function makeDraggable(node, course) {
         event.dataTransfer.setData('text/plain', course.code);
         event.dataTransfer.effectAllowed = 'copyMove';
         node.classList.add('is-dragging');
+        // while the course is in hand, say which trimesters it is offered in so
+        // the board can light those cells up
+        document.body.dataset.dragOffered = (course.offered || []).join(' ');
     });
     node.addEventListener('dragend', () => {
         node.classList.remove('is-dragging');
+        delete document.body.dataset.dragOffered;
         document.querySelectorAll('.drop-target').forEach(el => el.classList.remove('drop-target'));
     });
 }
