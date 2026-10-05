@@ -2,7 +2,7 @@ import { renderHints } from './components/hints.js';
 import { renderZoom } from './components/zoom.js';
 import { loadSavedPlan, savePlan, serializePlan, restorePlan } from './storage.js';
 import { loadCourses } from './data/catalogue.js';
-import { addCourse, createPlan, removeCourse, moveCourse, foundationPlan, terms } from './plan.js';
+import { addCourse, createPlan, removeCourse, moveCourse, foundationPlan, suggestTerm, terms } from './plan.js';
 import { getElement } from './lib/dom.js';
 import { defaultPreferences, makeCourseType, setupProgramme } from './components/programme.js';
 import { setupCatalogue } from './components/catalogue.js';
@@ -49,7 +49,7 @@ async function main() {
     const courseType = course => classify(course);
     function select(course) {
         selected = course;
-        showDetails(course, { onSelectCode: code => select(byCode.get(code)), hasCode: code => byCode.has(code), onMove: move, fourYear: preferences.fourYear, termId: Object.keys(plan).find(term => plan[term].some(c => c.code === course.code)) });
+        showDetails(course, { onSelectCode: code => select(byCode.get(code)), hasCode: code => byCode.has(code), onMove: move, fourYear: preferences.fourYear, termId: Object.keys(plan).find(term => plan[term].some(c => c.code === course.code)), suggestedTerm: suggestTerm(course, plan, preferences.fourYear) });
         document.querySelectorAll('[data-code]').forEach(node => node.classList.toggle('is-selected', node.dataset.code === course.code));
     }
     function move(code, termId) {
@@ -103,7 +103,9 @@ async function main() {
         persist();
         refresh();
     });
-    catalogue = setupCatalogue({ courses, subjects, terms, getPreferences: () => preferences, getSelectedCode: () => selected?.code, isPlaced, courseType, onDetails: select, onAdd(course, termId) {
+    catalogue = setupCatalogue({ courses, subjects, terms, getPreferences: () => preferences, getSelectedCode: () => selected?.code, isPlaced, courseType, onDetails: select, onAdd(course) {
+        // no term picker any more — aim at the first trimester it is offered in
+        const termId = suggestTerm(course, plan, preferences.fourYear);
         if (!preferences.fourYear && termId.startsWith('4-')) return;
         if (!isPlaced(course.code)) checkpoint();
         const added = addCourse(plan, termId, course);

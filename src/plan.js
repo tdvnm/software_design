@@ -22,6 +22,17 @@ export function countCredits(courses) {
     return courses.reduce((total, course) => total + course.credits, 0);
 }
 
+// Where a course should land when nobody picked a trimester: the first one it
+// is actually offered in, in a year the student is eligible for, that still has
+// room under the 20-credit limit.
+export function suggestTerm(course, plan, fourYear = true) {
+    const fits = terms.filter(term =>
+        (fourYear !== false || term.year < 4) &&
+        (!course.offered?.length || course.offered.includes(Number(term.id.split('-')[1]))) &&
+        (!course.eligibleYears?.length || course.eligibleYears.includes(term.year)));
+    return (fits.find(term => countCredits(plan[term.id]) < 20) || fits[0] || terms[0]).id;
+}
+
 export function moveCourse(plan, termId, course) {
     if (!Object.hasOwn(plan, termId)) throw new Error('Unknown term');
     for (const list of Object.values(plan)) {
