@@ -10,8 +10,18 @@ export function setupCatalogue(options) {
     function render() {
         const filterHost = getElement('quick-filters');
         const focusSubject = filterHost.contains(document.activeElement) ? document.activeElement.dataset.subject : undefined;
-        const major = options.getPreferences?.().major;
-        const quick = [['', 'all'], ...(major ? [[major, major === 'computer science' ? 'comp' : major.split(' ')[0]]] : []), ['core', 'kccs']];
+        // one chip per subject the student actually chose — a double major gets
+        // both of its majors here, not just the first one
+        const preferences = options.getPreferences?.() || {};
+        const structure = preferences.structure || '';
+        const chosen = [
+            preferences.major,
+            structure === 'double-major' ? preferences.major2 : '',
+            structure.includes('minor') ? preferences.minor : '',
+            structure.includes('conc') ? preferences.concentration : '',
+        ].filter((value, index, all) => value && all.indexOf(value) === index);
+        const short = value => value === 'computer science' ? 'comp' : value.split(' ')[0];
+        const quick = [['', 'all'], ...chosen.map(value => [value, short(value)]), ['core', 'kccs']];
         filterHost.replaceChildren(...quick.map(([value, label]) => {
             const button = createButton(label, () => { subject.value = value; render(); });
             button.dataset.subject = value;
