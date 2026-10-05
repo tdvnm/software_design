@@ -165,8 +165,12 @@ body:not(.planner-page) section, .card { background: var(--paper); border: 1px s
 .zoom-heading h3 { font-size: 17px; }
 .zoom-heading button { font-size: 11px; }
 .zoom-heading > span { font-size: 11px; margin-left: auto; }
-.zoom-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); grid-auto-rows: minmax(100px, auto); gap: .6rem; min-height: 410px; align-content: start; border: 1px dashed var(--border); border-radius: 8px; padding: .65rem; background: repeating-linear-gradient(transparent 0, transparent 106px, var(--board-line) 106px, var(--board-line) 107px); }
-.zoom-course { position: relative; border: 1px solid var(--line); border-radius: 6px; background: var(--paper); box-shadow: var(--shine), var(--shadow); }
+.zoom-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); grid-auto-rows: minmax(100px, auto); gap: .6rem; min-height: 410px; align-content: start; border: 1px dashed var(--border); border-radius: 8px; padding: .65rem; border-color: var(--zone-line);
+  /* ruled paper: the rows making up the 12-credit minimum are tinted, every
+     row past it is the same pale field */
+  background: repeating-linear-gradient(transparent 0 106px, var(--zone-line) 106px 107px), linear-gradient(var(--zone-min) 0 213px, var(--zone-rest) 213px); }
+.zoom-course { position: relative; border: 1px solid var(--line); border-radius: 6px; background: linear-gradient(var(--card), var(--card-end)); box-shadow: var(--shine), var(--shadow); }
+.zoom-course:hover { box-shadow: var(--shine-hover), var(--shadow-hover); }
 .zoom-course-details { display: flex; flex-direction: column; gap: .5rem; text-align: left; width: 100%; height: 100%; padding: 1rem 1.7rem 1rem 1rem; border: 0; background: none; box-shadow: none; }
 .zoom-course-details strong { font-size: 17px; }
 .zoom-course-details small { margin-top: auto; }
